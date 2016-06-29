@@ -1,6 +1,7 @@
 %init_con_pairs
-numb_of_l_areas=50;
 numb_of_s_areas=13;
+numb_of_l_areas=50;
+numb_of_p_areas=8;
 pairs=zeros(numb_of_l_areas+numb_of_s_areas,numb_of_l_areas+numb_of_s_areas);
 for i=1:size(pairs,1)
     connectl=randi(1)+1;

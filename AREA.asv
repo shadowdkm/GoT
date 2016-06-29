@@ -34,13 +34,17 @@ classdef AREA < handle
            end
            fprintf('Area %d (%s) is created with %d barrels, %d crowns and %d towers.\n',index, L,barrels, crowns, towers);
        end
-       function reachable_area_indexs=can_march_to(index_of_this_land, current_reachables)
+       function reachable=can_march_to(obj,reachables)
+           index_of_this_land=obj.index;
            flag=areas(index_of_this_land).house_flag;
-           land_type=areas(index_of_this_land).is_land;
+           if isempty(reachables)
+               reachable=pairs(:,index_of_this_land);
+           end
            if flag==0
-               reachable_area_indexs=[];
+               reachable=[];
                return;
            end  
+           
            
        end
        function set_house_flag(obj,flag)

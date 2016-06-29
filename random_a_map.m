@@ -1,9 +1,9 @@
 %make_a_ramdom_map
 clc
-clear areas
+clear 
+load pairs
 %%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-numb_of_land_areas=50;
-numb_of_sea_areas=13;
+
 areas=[];
 for i=1:numb_of_land_areas
    resources=randi(3)-1;
@@ -21,13 +21,8 @@ for i=1:numb_of_land_areas
                tower_here=tower_here+1;
        end
    end
-   possible_ground_connections=randperm(numb_of_land_areas);
-   possible_ground_connections=possible_ground_connections(1:(3+randi(3)));
-   possible_sea_connections=randperm(numb_of_sea_areas);
-   possible_sea_connections=possible_sea_connections(1:(-1+randi(2)));
-   possible_sea_connections=possible_sea_connections+numb_of_land_areas;
-   
-   areas=[areas,AREA(i, 1, 0, 0, crown_here, barrel_here, tower_here, [possible_ground_connections,possible_sea_connections])];
+  
+   areas=[areas,AREA(i, 1, 0, 0, crown_here, barrel_here, tower_here,find(pairs(:,i)))];
 end
 
 
@@ -36,13 +31,7 @@ for i=1:numb_of_sea_areas
    crown_here=0;
    tower_here=0;
   
-   possible_ground_connections=randperm(numb_of_land_areas);
-   possible_ground_connections=possible_ground_connections(1:(3+randi(3)));
-   possible_sea_connections=randperm(numb_of_sea_areas);
-   possible_sea_connections=possible_sea_connections(1:(-1+randi(3)));
-   possible_sea_connections=possible_sea_connections+numb_of_land_areas;
-   
-   areas=[areas,AREA(i+numb_of_land_areas, 0, 0, 0, crown_here, barrel_here, tower_here, [possible_ground_connections,possible_sea_connections])];
+  areas=[areas,AREA(i+numb_of_land_areas, 0, 0, 0, crown_here, barrel_here, tower_here, find(pairs(:,i+numb_of_land_areas)))];
 
 end
 

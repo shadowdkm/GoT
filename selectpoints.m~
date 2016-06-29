@@ -55,19 +55,14 @@ totalAreasNumber=58;
 %%
 clc
 clf
-figure,
-
+imshow(map),hold on
 for i=1:58
-    clf
-    imshow(map),hold on
     plot(locationArray(1,i)+50*rx,locationArray(2,i)+50*ry,'y','linewidth',4)
     
     for j=1:length(connections(i).elems)
         plot([locationArray(1,i),locationArray(1,connections(i).elems(j))],[locationArray(2,i),locationArray(2,connections(i).elems(j))],'w:','linewidth',2)
-        pause(0.5)
     end
-    text(locationArray(1,i),locationArray(2,i),sprintf('%d',59-i),'BackgroundColor',[1,1,1],'FontSize', 20)
-    pause(2)
+    text(locationArray(1,i),locationArray(2,i),sprintf('%d',59-i),'BackgroundColor',[1,1,1])
 end
 hold off
 
@@ -81,14 +76,9 @@ for i=1:58
     end
 end
 areas=areas+areas';
-%areas(areas>1)=1;
+areas(areas>1)=1;
 areas=flipud(areas);
 areas=fliplr(areas);
 capicals=zeros(58,58);
-capicals(13,13)=1;
-capicals(23,23)=1;
-capicals(27,27)=1;
-capicals(41,41)=1;
-capicals(47,47)=1;
-capicals(37,37)=1;
-figure,imagesc(areas+capicals)
+capicals([1,1]*[13,23,27,])
+figure,imagesc(areas)

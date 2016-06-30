@@ -35,3 +35,8 @@ for i=1:6
     areas(init_seas(i)).set_house_flag(i);
     areas(init_seas(i)).add_troop(0);
 end
+
+areas(50).set_house_flag(3);
+areas(50).add_troop(1);
+areas(42).set_house_flag(3);
+areas(42).add_troop(1);

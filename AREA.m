@@ -215,6 +215,7 @@ classdef AREA < handle
            k=randi(size(possible_orders,2));
            while(~obj.move_troop(current_map_areas, possible_orders(k)))
                possible_orders(k)=[];
+               fprintf('\r[%d]',k)
                if isempty(possible_orders)
                    break;
                end

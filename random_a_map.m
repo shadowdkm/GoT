@@ -40,3 +40,5 @@ areas(50).set_house_flag(3);
 areas(50).add_troop(1);
 areas(42).set_house_flag(3);
 areas(42).add_troop(1);
+areas(42).add_troop(2);
+areas(42).add_troop(3);

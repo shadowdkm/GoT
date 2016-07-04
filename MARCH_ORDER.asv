@@ -1,0 +1,27 @@
+classdef MARCH_ORDER < handle
+    properties (GetAccess=public, SetAccess=private)
+        house_flag=0;
+        area_index=0;
+        element_array=[];
+    end
+    methods
+       function obj = MARCH_ORDER()
+            obj.house_flag=0;
+            obj.area_index=0;
+            obj.element_array=[];
+       end
+       function obj=add_element(obj,target,troop_index)
+           obj.element_array=[obj.element_array,MARCH_ORDER_ELEMENT(target,troop_index)];
+       end
+       function obj=Enable(obj)
+           obj.active=1;
+       end
+       function obj=Killed(obj)
+           obj.iskilled=1;
+           obj.active=0;
+       end
+    end
+end
+    
+    
+ 

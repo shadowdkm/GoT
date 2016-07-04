@@ -95,12 +95,55 @@ classdef AREA < handle
             end
        end
        
+       function type_array=troop_index2type(obj,index1001)
+            type_array=[];
+            for i=1:length(obj.troops)
+                if index1001(i)==1
+                    type_array=[type_array,obj.troops(i).type];
+                end
+            end
+       end
+       
        function march_orders=march_sequence(obj, current_map_areas)
            march_choices=march_combinations(obj, current_map_areas);
+           march_choices(:,end+1:4)=0;
+           march_orders=[];
+           
            for i=1:size(march_choices,1)
-               march_order=zeros(1,20);
-               
+%                march_order=zeros(1,20);
+               targets_this_time=unique(march_choices(i,march_choices(i,:)>0));
+               if length(targets_this_time)==1
+                    march_order=zeros(1,20);                    
+                    march_order(1)=targets_this_time(1);
+                    march_order(2:5)=(march_choices(i,:)==targets_this_time(1));
+               elseif length(targets_this_time)==2
+                    march_order=zeros(2,20);
+                    
+                    march_order(1,1)=targets_this_time(1);
+                    march_order(1,2:5)=(march_choices(i,:)==targets_this_time(1));
+                    march_order(1,6)=targets_this_time(2);
+                    march_order(1,7:10)=(march_choices(i,:)==targets_this_time(2));
+                    
+                    march_order(2,1)=targets_this_time(2);
+                    march_order(2,2:5)=(march_choices(i,:)==targets_this_time(2));
+                    march_order(2,6)=targets_this_time(1);
+                    march_order(2,7:10)=(march_choices(i,:)==targets_this_time(1));
+               else
+                    sort_tars=perms(targets_this_time);
+                    march_order=zeros(size(sort_tars,1),20);
+                    for j=1:size(sort_tars,1)
+                        for k=1:length(targets_this_time)
+                            march_order(j,k*5+[-4])=targets_this_time(k);
+                            march_order(j,k*5+[-3:0])=(march_choices(i,:)==targets_this_time(k));
+                        end
+                    end
+               end
+               march_orders=[march_orders;march_order];   
+march_order=MARCH_ORDER(obj.house_flag,obj.index);
+troop_array=troop_index2type(obj,march_choices(i,:)==targets_this_time);
+march_order.add_element(targets_this_time,troop_array);
            end
+           march_orders=[ones(size(march_orders,1),1)*obj.house_flag,ones(size(march_orders,1),1)*obj.index,march_orders];
        end
        
        function set_house_flag(obj,flag)
@@ -110,6 +153,37 @@ classdef AREA < handle
        function add_troop(obj,troop_type)
            obj.troops=[obj.troops,TROOP(troop_type,obj.house_flag)];
            fprintf(' @ Area %d\n', obj.index);
+       end
+       
+       function remove_troop(obj,troop_index)
+           obj.troops(troop_index)=[];
+       end
+       
+       function remove_all_troops(obj)
+           obj.troops=[];
+       end
+       
+       function valid_move=move_troop(obj, current_map_areas, one_march_order)
+           %march order is a 22x1 vector
+            troop_array=[];
+            for troop_index=1:length(obj.troops)
+                troop_array=[troop_array,obj.troops(troop_index).type];
+            end
+            current_map_areas(one_march_order(2)).remove_all_troops;
+            for i=1:4
+               if one_march_order(i*5-2)==0
+                   break;
+               elseif current_map_areas(one_march_order(i*5-2)).house_flag~=obj.house_flag&&current_map_areas(one_march_order(i*5-2)).house_flag~=0
+                    valid_move=0;
+                    return;
+               end
+               for j=1:4
+                   if one_march_order(i*5-2+j)==1
+                       current_map_areas(one_march_order(i*5-2)).add_troop(troop_array(j));
+                   end
+               end
+            end
+            valid_move=1;
        end
     end
 end

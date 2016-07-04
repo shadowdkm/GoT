@@ -10,6 +10,8 @@ function arrangements=arrange_targets(troop_number,target_array)
     elseif troop_number==4
         [X1 X2 X3 X4]=ndgrid(target_array,target_array,target_array,target_array);
         arrangements=[X1(:),X2(:),X3(:),X4(:)];
+    else
+         arrangements=[];
     end
 
 

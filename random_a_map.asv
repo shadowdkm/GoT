@@ -23,7 +23,7 @@ for i=1:size(areaconns,1)
        end
    end
    
-   areas=[areas,AREA(i, areatype(i), 0, crown_here, barrel_here, tower_here,areaconns(:,i))];
+   areas=[areas,AREA(i, areatype(i), 0, crown_here, barrel_here, tower_here)];
 end
 
 capitals=[13,23,27,41,37,47];
@@ -32,5 +32,19 @@ for i=1:6
     areas(capitals(i)).set_house_flag(i);
     areas(capitals(i)).add_troop(1);
     areas(capitals(i)).add_troop(2);
-
+    areas(init_seas(i)).set_house_flag(i);
+    areas(init_seas(i)).add_troop(0);
 end
+
+areas(50).set_house_flag(3);
+areas(50).add_troop(1);
+areas(42).set_house_flag(3);
+areas(42).add_troop(1);
+areas(42).add_troop(2);
+areas(42).add_troop(3);
+
+orders=areas(42).march_sequence(areas);
+
+
+
+

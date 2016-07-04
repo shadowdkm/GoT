@@ -107,7 +107,7 @@ classdef AREA < handle
        function march_orders=march_sequence(obj, current_map_areas)
            march_choices=march_combinations(obj, current_map_areas);
            march_choices(:,end+1:4)=0;
-           march_orders=[];
+           arrayed_march_orders=[];
            
            for i=1:size(march_choices,1)
 %                march_order=zeros(1,20);
@@ -138,13 +138,24 @@ classdef AREA < handle
                         end
                     end
                end
-               march_orders=[march_orders;march_order];   
-march_order=MARCH_ORDER(obj.house_flag,obj.index);
-troop_array=troop_index2type(obj,march_choices(i,:)==targets_this_time);
-march_order.add_element(targets_this_time,troop_array);
+               arrayed_march_orders=[arrayed_march_orders;march_order];   
+               
+
            end
-           march_orders=[ones(size(march_orders,1),1)*obj.house_flag,ones(size(march_orders,1),1)*obj.index,march_orders];
-       end
+           
+           march_orders=[];
+           
+            for i=1:size(arrayed_march_orders)
+                 one_march_order=MARCH_ORDER(obj.house_flag,obj.index);
+                 for j=1:4
+                     if arrayed_march_orders(i,j*5-4)~=0
+                         troop_array=obj.troop_index2type(arrayed_march_orders(i,j*5+[-3:0]));
+                         one_march_order.add_element(arrayed_march_orders(i,j*5-4),troop_array);
+                     end
+                 end
+                 march_orders=[march_orders,one_march_order];
+            end
+        end
        
        function set_house_flag(obj,flag)
            obj.house_flag=flag;
@@ -163,27 +174,52 @@ march_order.add_element(targets_this_time,troop_array);
            obj.troops=[];
        end
        
+       function put_a_throne_token(obj)
+           obj.throne_token=1;
+           fprintf('A throne token put in Area %d\n',obj.index)
+       end
+       
+       function remove_throne_token(obj)
+           obj.throne_token=0;
+           fprintf('A throne token in Area %d in removed\n',obj.index)
+       end
+       
        function valid_move=move_troop(obj, current_map_areas, one_march_order)
-           %march order is a 22x1 vector
-            troop_array=[];
-            for troop_index=1:length(obj.troops)
-                troop_array=[troop_array,obj.troops(troop_index).type];
-            end
-            current_map_areas(one_march_order(2)).remove_all_troops;
-            for i=1:4
-               if one_march_order(i*5-2)==0
+          for i=1:length(one_march_order.element_array)%check move validity
+             if current_map_areas(one_march_order.area_index).house_flag~=current_map_areas(one_march_order.element_array(i).target).house_flag&&current_map_areas(one_march_order.element_array(i).target).house_flag~=0
+                valid_move=0;
+                return;
+             end
+          end
+          current_map_areas(one_march_order.area_index).remove_all_troops;
+          while(~isempty(one_march_order.element_array))
+              current_map_areas(one_march_order.element_array(1).target).set_house_flag(one_march_order.house_flag);
+              for j=1:length(one_march_order.element_array(1).troop_indexes)
+                  fprintf('From Area %d',one_march_order.area_index)
+                  current_map_areas(one_march_order.element_array(1).target).add_troop(one_march_order.element_array(1).troop_indexes(j));
+              end
+              
+              one_march_order.remove_first_element;
+          end
+          valid_move=1;
+          if isempty(current_map_areas(one_march_order.area_index).troops)
+                current_map_areas(one_march_order.area_index).put_a_throne_token;
+          end
+       end
+       
+       function random_move_troops(obj,current_map_areas)
+           if obj.house_flag==0||isempty(obj.troops)
+               return
+           end
+           possible_orders=obj.march_sequence(current_map_areas);
+           k=randi(size(possible_orders,2));
+           while(~obj.move_troop(current_map_areas, possible_orders(k)))
+               possible_orders(k)=[];
+               if isempty(possible_orders)
                    break;
-               elseif current_map_areas(one_march_order(i*5-2)).house_flag~=obj.house_flag&&current_map_areas(one_march_order(i*5-2)).house_flag~=0
-                    valid_move=0;
-                    return;
                end
-               for j=1:4
-                   if one_march_order(i*5-2+j)==1
-                       current_map_areas(one_march_order(i*5-2)).add_troop(troop_array(j));
-                   end
-               end
-            end
-            valid_move=1;
+               k=randi(size(possible_orders,2));               
+           end
        end
     end
 end

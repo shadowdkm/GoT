@@ -42,3 +42,18 @@ areas(42).set_house_flag(3);
 areas(42).add_troop(1);
 areas(42).add_troop(2);
 areas(42).add_troop(3);
+
+orders=areas(42).march_sequence(areas);
+
+
+valid_move=areas(42).move_troop(areas, orders(3));
+areas(47).random_move_troops(areas)
+for rounds=1:10
+    for i=1:58
+            areas(i).random_move_troops(areas)
+    end
+    for i=1:6
+        areas(capitals(i)).add_troop(1);
+        areas(init_seas(i)).add_troop(0);
+    end
+end

@@ -46,11 +46,11 @@ classdef AREA < handle
                reachable=[];
                return;
            end  
-           for looping_index=1:13
+           for looping_index=1:12
               new_connection=0;
-              for inner_looping_index=1:13 
-                 if reachable(inner_looping_index)>0 && current_map_areas(reachable(inner_looping_index)).house_flag==current_map_areas(index_of_this_land).house_flag
-                     reachable=reachable+current_map_areas(reachable(inner_looping_index)).connected_to;
+              for inner_looping_index=1:12 
+                 if reachable(inner_looping_index)>0 && current_map_areas(inner_looping_index).house_flag==current_map_areas(index_of_this_land).house_flag
+                     reachable=reachable+current_map_areas(inner_looping_index).connected_to;
                      new_connection=new_connection+1;
                  end
               end
@@ -162,6 +162,11 @@ classdef AREA < handle
        end
        
        function add_troop(obj,troop_type)
+           if length(obj.troops)>=4
+               fprintf('Already 4 Troops @ Area %d\n', obj.index);
+               return;
+           end
+               
            obj.troops=[obj.troops,TROOP(troop_type,obj.house_flag)];
            fprintf(' @ Area %d\n', obj.index);
        end
@@ -194,15 +199,15 @@ classdef AREA < handle
           current_map_areas(one_march_order.area_index).remove_all_troops;
           while(~isempty(one_march_order.element_array))
               current_map_areas(one_march_order.element_array(1).target).set_house_flag(one_march_order.house_flag);
-              for j=1:length(one_march_order.element_array(1).troop_indexes)
-                  fprintf('From Area %d',one_march_order.area_index)
-                  current_map_areas(one_march_order.element_array(1).target).add_troop(one_march_order.element_array(1).troop_indexes(j));
+              for j=1:length(one_march_order.element_array(1).troop_type_array)
+                  fprintf('From Area %d ',one_march_order.area_index)
+                  current_map_areas(one_march_order.element_array(1).target).add_troop(one_march_order.element_array(1).troop_type_array(j));
               end
               
               one_march_order.remove_first_element;
           end
           valid_move=1;
-          if isempty(current_map_areas(one_march_order.area_index).troops)
+          if isempty(current_map_areas(one_march_order.area_index).troops)&&current_map_areas(one_march_order.area_index).land_type==1
                 current_map_areas(one_march_order.area_index).put_a_throne_token;
           end
        end
@@ -215,7 +220,7 @@ classdef AREA < handle
            k=randi(size(possible_orders,2));
            while(~obj.move_troop(current_map_areas, possible_orders(k)))
                possible_orders(k)=[];
-               fprintf('\r[%d]',k)
+               fprintf('[%d/%d]',k,size(possible_orders,2))
                if isempty(possible_orders)
                    break;
                end

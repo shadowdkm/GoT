@@ -69,7 +69,7 @@ for i=1:58
 end
 
 for i=1:58
-    text(locationArray(1,i),locationArray(2,i),sprintf('%d',59-i),'BackgroundColor',[1,1,1],'FontSize', 20)
+    text(locationArray(1,i),locationArray(2,i),sprintf('%d',59-i),'BackgroundColor',[1,1,1],'FontSize', 10)
 end
 hold off
 

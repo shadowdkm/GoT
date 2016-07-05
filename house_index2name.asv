@@ -7,5 +7,4 @@ function H=house_index2name(index)
         elseif index==2, H='Brt';
         elseif index==1, H='Drn';
         end
-        %capitals=[13,23,27,37,41,47];
 end

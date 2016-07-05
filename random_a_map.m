@@ -26,8 +26,8 @@ for i=1:size(areaconns,1)
    areas=[areas,AREA(i, areatype(i), 0, crown_here, barrel_here, tower_here)];
 end
 
-capitals=[13,23,27,41,37,47];
-init_seas=[7,10,5,2,3,1];
+capitals=[13,23,27,37,41,47];
+init_seas=[8,10,5,3,2,12];
 for i=1:6
     areas(capitals(i)).set_house_flag(i);
     areas(capitals(i)).add_troop(1);
@@ -46,9 +46,9 @@ areas(42).add_troop(3);
 orders=areas(42).march_sequence(areas);
 
 
-valid_move=areas(42).move_troop(areas, orders(3));
+areas(42).random_move_troops(areas)
 areas(47).random_move_troops(areas)
-for rounds=1:10
+for rounds=1:3
     for i=1:58
             areas(i).random_move_troops(areas)
     end

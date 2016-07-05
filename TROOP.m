@@ -10,12 +10,12 @@ classdef TROOP < handle
           if nargin == 2
              obj.type = init_type;
              obj.house_flag=init_house;
-             if init_house==1, H='Stk';
-             elseif init_house==2, H='Grj';
-             elseif init_house==3, H='Lts';
-             elseif init_house==4, H='Tyr';
-             elseif init_house==5, H='Brt';
-             elseif init_house==6, H='Drn';
+             if init_house==6, H='Stk';
+             elseif init_house==5, H='Grj';
+             elseif init_house==4, H='Lts';
+             elseif init_house==3, H='Tyr';
+             elseif init_house==2, H='Brt';
+             elseif init_house==1, H='Drn';
              else error('house label should be [1,6]');
              end
              
@@ -26,7 +26,7 @@ classdef TROOP < handle
              else error('type label should be [0,3]');
              end
              
-             fprintf('A %s %s is ',H,T);
+             fprintf('a %s %s is ',H,T);
           else
              error('troop type and house it belongs to have to be determined');
           end

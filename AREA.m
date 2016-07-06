@@ -189,13 +189,51 @@ classdef AREA < handle
            fprintf('A throne token in Area %d in removed\n',obj.index)
        end
        
-       function valid_move=move_troop(obj, current_map_areas, one_march_order)
-          for i=1:length(one_march_order.element_array)%check move validity
-             if current_map_areas(one_march_order.area_index).house_flag~=current_map_areas(one_march_order.element_array(i).target).house_flag&&current_map_areas(one_march_order.element_array(i).target).house_flag~=0
-                valid_move=0;
-                return;
-             end
-          end
+       function pop_array=sort_army(obj,current_map_areas,house_flag)
+           pop_array=[];
+           for i=1:58
+               if current_map_areas(i).house_flag==house_flag && length(current_map_areas(i).troops)>1
+                    pop_array=[pop_array,length(current_map_areas(i).troops)];
+               end
+           end
+           pop_array=sort(pop_array,'descend');
+       end
+       
+       function validity=check_population(obj, current_map_areas, house_flag, barrels)
+           
+           capacity=supply(barrels);
+           pop_array=sort_army(obj,current_map_areas,house_flag);
+           if isempty(pop_array)
+               validity=1;
+               return;
+           end
+           capacity(length(pop_array)+1:end)=[];
+           fault_indexs=find(capacity-pop_array<0);
+%           fault_indexs=find(capacity(1:length(pop_array))-pop_array<0);
+           if isempty(fault_indexs)
+               validity=1;
+           else
+               validity=0;
+           end
+       end
+       
+       function recruit_combinations=recruit(obj, current_map_areas, barrels)
+           recruit_combinations=[];
+           if obj.towers==0
+               return;
+           end
+           possible_seas=find(obj.connected_to(1:12));
+           possible_port=find(obj.connected_to(51:58));
+           possible_upgrade=[];
+           for i=1:length(obj.troops)
+               if obj.troops(i).type==1
+                   possible_upgrade=[possible_upgrade,i];
+               end
+           end
+           
+       end
+       
+       function move_troop(obj, current_map_areas, one_march_order)
           current_map_areas(one_march_order.area_index).remove_all_troops;
           while(~isempty(one_march_order.element_array))
               current_map_areas(one_march_order.element_array(1).target).set_house_flag(one_march_order.house_flag);
@@ -206,25 +244,60 @@ classdef AREA < handle
               
               one_march_order.remove_first_element;
           end
-          valid_move=1;
+
+          if isempty(current_map_areas(one_march_order.area_index).troops)&&current_map_areas(one_march_order.area_index).land_type==0
+                current_map_areas(one_march_order.area_index).set_house_flag(0);
+          end
+          
+          %
           if isempty(current_map_areas(one_march_order.area_index).troops)&&current_map_areas(one_march_order.area_index).land_type==1
-                current_map_areas(one_march_order.area_index).put_a_throne_token;
+                current_map_areas(one_march_order.area_index).set_house_flag(0);
           end
        end
        
-       function random_move_troops(obj,current_map_areas)
+       function valid_move=test_move(obj, current_map_areas, current_barrels,one_march_order)
+          %target valid
+           for i=1:length(one_march_order.element_array)%check move validity
+             if current_map_areas(one_march_order.area_index).house_flag~=current_map_areas(one_march_order.element_array(i).target).house_flag&&current_map_areas(one_march_order.element_array(i).target).house_flag~=0
+                valid_move=0;
+                return;
+             end
+          end
+          test_map=copy(current_map_areas);
+          fprintf('Testing Move:');
+          obj.move_troop(test_map, one_march_order);
+          
+          %pop valid
+          pop_validity=obj.check_population( test_map, one_march_order.house_flag, current_barrels);
+          if pop_validity==0, valid_move=0; return;end
+          
+          
+          
+          
+          
+          valid_move=1;
+       end
+       
+       
+       function random_move_troops(obj,current_map_areas, barrel_list)
            if obj.house_flag==0||isempty(obj.troops)
                return
            end
+           house_barrels=barrel_list(obj.house_flag);
            possible_orders=obj.march_sequence(current_map_areas);
            k=randi(size(possible_orders,2));
-           while(~obj.move_troop(current_map_areas, possible_orders(k)))
+           fprintf('[%d]:',size(possible_orders,2))
+           while(~obj.test_move(current_map_areas, house_barrels, possible_orders(k)))
                possible_orders(k)=[];
-               fprintf('[%d/%d]',k,size(possible_orders,2))
+               fprintf('[%d]',k)
                if isempty(possible_orders)
-                   break;
+                   return;
+%                    break;
                end
                k=randi(size(possible_orders,2));               
+           end
+           if ~isempty(possible_orders)
+                obj.move_troop(current_map_areas, possible_orders(k))
            end
        end
     end

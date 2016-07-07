@@ -9,6 +9,7 @@ classdef MAP < handle
       current_crowns=[5,5,5,5,5,5];
       current_barrels=[1,1,1,1,1,1];
     end
+    
     methods
         function obj = MAP()
             load map_res
@@ -88,8 +89,8 @@ classdef MAP < handle
             fprintf('\n2: '), for i=1:6,    fprintf('%s ',house_index2name(obj.rank2(i))),  end
             fprintf('\n3: '), for i=1:6,    fprintf('%s ',house_index2name(obj.rank3(i))),  end
             fprintf('\n');
-            for i=1:6
-                fprintf('\nH%d: %dB %dT',i,obj.barrels_on_the_map(i),obj.castles_occupied(i))
+            for i=6:-1:1
+                fprintf('\n%s: %dB %dT',house_index2name(i),obj.barrels_on_the_map(i),obj.castles_occupied(i))
                 area_list2disp=obj.areas_of_a_house(i);
                 fprintf('\n');
                 for j=1:length(area_list2disp)
@@ -105,6 +106,44 @@ classdef MAP < handle
             
 %             fprintf('\n*****************************')
             fprintf('\n')
+        end    
+        
+        function rec_comb=recruit_combinations(obj, index)
+            rec_comb=obj.map_areas(index).recruit_combinations(obj.map_areas, obj.current_barrels);
+        end
+        
+        function cut_army(obj,house_flag)
+            for i=1:58
+                if obj.map_areas(i).house_flag==house_flag
+                    [validity,fault_indexs]=obj.map_areas(i).check_population(obj.map_areas, house_flag, obj.current_barrels);
+                    break;
+                end                
+            end
+            
+            if validity==1, return; end
+            while validity==0
+                obj.map_areas(fault_indexs(1)).remove_smallest_troop;
+                [validity,fault_indexs]=obj.map_areas(i).check_population(obj.map_areas, house_flag, obj.current_barrels);
+            end
+        end
+        
+        function random_local_recruit(obj,index)
+            if obj.map_areas(index).towers==1
+                rec_comb=obj.recruit_combinations(index);
+                recruit_command=randi(size(rec_comb,1));
+                recruit_command=rec_comb(recruit_command,:);
+                obj.map_areas(index).recruit(obj.map_areas,recruit_command);
+            elseif obj.map_areas(index).towers==2
+                rec_comb=obj.recruit_combinations(index);
+                recruit_command=randi(size(rec_comb,1));
+                recruit_command=rec_comb(recruit_command,:);
+                obj.map_areas(index).recruit(obj.map_areas,recruit_command);
+                
+                rec_comb=obj.recruit_combinations(index);
+                recruit_command=randi(size(rec_comb,1));
+                recruit_command=rec_comb(recruit_command,:);
+                obj.map_areas(index).recruit(obj.map_areas,recruit_command);
+            end
         end
         
         function random_a_around(obj)
@@ -120,18 +159,22 @@ classdef MAP < handle
                 end
             end
             
+            obj.list_map_as_text;
+            
+            for i=1:6                
+                 obj.map_areas(obj.capitals(i)).set_house_flag(i);
+                 obj.current_barrels(i)=barrels_on_the_map(obj, i);
+            end
+            
+            obj.list_map_as_text;
+            
             for i=1:6
-                obj.current_barrels(i)=barrels_on_the_map(obj, i);
-                obj.map_areas(obj.capitals(i)).set_house_flag(i);
-                obj.map_areas(obj.capitals(i)).add_troop(1);
-                obj.map_areas(obj.init_seas(i)).set_house_flag(i);
-                obj.map_areas(obj.init_seas(i)).add_troop(0);
+                 obj.random_local_recruit(obj.capitals(i))
+                 obj.cut_army(i)
             end
             
             obj.list_map_as_text;
         end
-        
-        
         
     end
 end

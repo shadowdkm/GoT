@@ -26,7 +26,6 @@ classdef TROOP < handle
              else error('type label should be [0,3]');
              end
              
-             fprintf('a %s %s is ',H,T);
           else
              error('troop type and house it belongs to have to be determined');
           end

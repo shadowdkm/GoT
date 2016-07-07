@@ -16,17 +16,22 @@ classdef AREA < handle
     
     
     methods
+      
        function obj = AREA(index, type, defence, crowns, barrels, towers)
            load AreaConns
+           obj.const_areaconns=areaconns;
+               
+           
            obj.index=index;
            obj.land_type=type;
            obj.defence=defence;
            obj.crowns=crowns;
            obj.barrels=barrels;
-           obj.towers=towers;
-           
-           obj.const_areaconns=areaconns;
+           obj.towers=towers;                      
            obj.connected_to=areaconns(:,index);
+
+
+
            if type==2
                L='port';
            elseif type==0
@@ -34,7 +39,8 @@ classdef AREA < handle
            else
                L='land';
            end
-           fprintf('Area %d (%s) is created with %d barrels, %d crowns and %d towers.\n',index, L,barrels, crowns, towers);
+           %fprintf('Area %d (%s) is created with %d barrels, %d crowns and %d towers.\n',index, L,barrels, crowns, towers);
+           
        end
        
        function reachable=can_march_to(obj, current_map_areas)
@@ -60,12 +66,12 @@ classdef AREA < handle
            end   
            
            if areatype(obj.index)==0 % sea
-               reachable(14:end)=0;
+               reachable(13:50)=0;
            elseif areatype(obj.index)==1 % land
-               reachable(1:13)=0;
+               reachable(1:12)=0;
                reachable(51:end)=0;
            elseif areatype(obj.index)==2    % port
-               reachable(14:end)=0;
+               reachable(13:end)=0;
            end
        end
        
@@ -256,20 +262,25 @@ classdef AREA < handle
        end
        
        function valid_move=test_move(obj, current_map_areas, current_barrels,one_march_order)
-          %target valid
-           for i=1:length(one_march_order.element_array)%check move validity
-             if current_map_areas(one_march_order.area_index).house_flag~=current_map_areas(one_march_order.element_array(i).target).house_flag&&current_map_areas(one_march_order.element_array(i).target).house_flag~=0
+          test_map=copy_map(current_map_areas);
+          test_order=copy_order(one_march_order);
+           %target valid
+           for i=1:length(test_order.element_array)%check move validity
+             if test_map(test_order.area_index).house_flag~=test_map(test_order.element_array(i).target).house_flag&&test_map(test_order.element_array(i).target).house_flag~=0
                 valid_move=0;
                 return;
              end
           end
-          test_map=copy(current_map_areas);
+          
           fprintf('Testing Move:');
-          obj.move_troop(test_map, one_march_order);
+          obj.move_troop(test_map, test_order);
           
           %pop valid
-          pop_validity=obj.check_population( test_map, one_march_order.house_flag, current_barrels);
-          if pop_validity==0, valid_move=0; return;end
+          pop_validity=obj.check_population( test_map, test_order.house_flag, current_barrels);
+          if pop_validity==0
+              valid_move=0;
+              return;
+          end
           
           
           
@@ -296,9 +307,9 @@ classdef AREA < handle
                end
                k=randi(size(possible_orders,2));               
            end
-           if ~isempty(possible_orders)
+%            if ~isempty(possible_orders)
                 obj.move_troop(current_map_areas, possible_orders(k))
-           end
+%            end
        end
     end
 end

@@ -18,14 +18,37 @@ classdef AREA < handle
     methods
        function obj = AREA(index, type, defence, crowns, barrels, towers)
            load AreaConns
+           obj.const_areaconns=areaconns;
+                      
            obj.index=index;
            obj.land_type=type;
            obj.defence=defence;
            obj.crowns=crowns;
            obj.barrels=barrels;
            obj.towers=towers;
-           
+                      
+           obj.connected_to=areaconns(:,index);
+           if type==2
+               L='port';
+           elseif type==0
+               L='sea';
+           else
+               L='land';
+           end
+           fprintf('Area %d (%s) is created with %d barrels, %d crowns and %d towers.\n',index, L,barrels, crowns, towers);
+       end
+       
+       function obj = AREA(index, type, defence, crowns, barrels, towers)
+           load AreaConns
            obj.const_areaconns=areaconns;
+                      
+           obj.index=index;
+           obj.land_type=type;
+           obj.defence=defence;
+           obj.crowns=crowns;
+           obj.barrels=barrels;
+           obj.towers=towers;
+                      
            obj.connected_to=areaconns(:,index);
            if type==2
                L='port';
@@ -244,11 +267,13 @@ classdef AREA < handle
               
               one_march_order.remove_first_element;
           end
-          
-          if isempty(current_map_areas(one_march_order.area_index).troops)&&current_map_areas(one_march_order.area_index).land_type==1
-                current_map_areas(one_march_order.area_index).put_a_throne_token;
-          end
+
           if isempty(current_map_areas(one_march_order.area_index).troops)&&current_map_areas(one_march_order.area_index).land_type==0
+                current_map_areas(one_march_order.area_index).set_house_flag(0);
+          end
+          
+          %
+          if isempty(current_map_areas(one_march_order.area_index).troops)&&current_map_areas(one_march_order.area_index).land_type==1
                 current_map_areas(one_march_order.area_index).set_house_flag(0);
           end
        end
@@ -261,7 +286,8 @@ classdef AREA < handle
                 return;
              end
           end
-          test_map=current_map_areas;
+          test_map=copy(current_map_areas);
+          fprintf('Testing Move:');
           obj.move_troop(test_map, one_march_order);
           
           %pop valid
@@ -288,7 +314,8 @@ classdef AREA < handle
                possible_orders(k)=[];
                fprintf('[%d]',k)
                if isempty(possible_orders)
-                   break;
+                   return;
+%                    break;
                end
                k=randi(size(possible_orders,2));               
            end

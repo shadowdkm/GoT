@@ -1,0 +1,11 @@
+% Make a copy of a handle object.
+function new = copy_map(this)
+    % Instantiate new object of the same class.
+    for i=
+
+    % Copy all non-hidden properties.
+    p = properties(this);
+    for i = 1:length(p)
+        new.(p{i}) = this.(p{i});
+    end
+end

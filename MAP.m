@@ -14,9 +14,9 @@ classdef MAP < handle
             load map_res
             load AreaConns
             obj.map_areas=[];
-            obj.rank1=randperm(6);
-            obj.rank2=randperm(6);
-            obj.rank3=randperm(6);
+%             obj.rank1=randperm(6);
+%             obj.rank2=randperm(6);
+%             obj.rank3=randperm(6);
             for i=1:size(areaconns,1)
                 obj.map_areas=[obj.map_areas,AREA(i, areatype(i), map_resourses(i,5), map_resourses(i,3), map_resourses(i,2), map_resourses(i,4))];
             end

@@ -55,21 +55,31 @@ classdef MAP < handle
             end
         end
         
-        function b=barrels_on_the_map(obj, house_index)
-            b=0;
-            for i=1:58
-                if obj.map_areas(i).house_flag==house_index
-                    b=b+obj.map_areas(i).barrels;
+        function update_barrels(obj)
+            for house_index=1:6
+                b=0;
+                for i=1:58
+                    if obj.map_areas(i).house_flag==house_index
+                        b=b+obj.map_areas(i).barrels;
+                    end
                 end
+                obj.current_barrels(house_index)=b;
             end
         end
         
-        function c=castles_occupied(obj, house_index)
-            c=0;
-            for i=1:58
-                if obj.map_areas(i).house_flag==house_index && obj.map_areas(i).towers>0
-                    c=c+1;
+        function castles_array=castles_occupied(obj,given_house_flag)
+            castles_array=[0,0,0,0,0,0];
+            for house_index=1:6
+                castles=0;
+                for i=1:58
+                    if obj.map_areas(i).house_flag==house_index && obj.map_areas(i).towers>0
+                        castles=castles+1;
+                    end
                 end
+                castles_array(house_index)=castles;
+            end
+            if nargin==2
+                castles_array=castles_array(given_house_flag);
             end
         end
         
@@ -90,13 +100,16 @@ classdef MAP < handle
             fprintf('\n3: '), for i=1:6,    fprintf('%s ',house_index2name(obj.rank3(i))),  end
             fprintf('\n');
             for i=6:-1:1
-                fprintf('\n%s: %dB %dT',house_index2name(i),obj.barrels_on_the_map(i),obj.castles_occupied(i))
+                fprintf('\n%s: %dB %dT',house_index2name(i),obj.current_barrels(i),obj.castles_occupied(i))
                 area_list2disp=obj.areas_of_a_house(i);
                 fprintf('\n');
                 for j=1:length(area_list2disp)
                     fprintf('%d[',area_list2disp(j));
                     for k=1:length(obj.map_areas(area_list2disp(j)).troops)
                         fprintf('%d',obj.map_areas(area_list2disp(j)).troops(k).type);
+                    end
+                    if obj.map_areas(area_list2disp(j)).throne_token>0
+                        fprintf('.');
                     end
                     fprintf('] ');
                 end
@@ -119,6 +132,7 @@ classdef MAP < handle
                 end
             end
         end
+        
         function cut_army(obj)
             for house_flag=1:6
                 for i=1:58
@@ -169,18 +183,18 @@ classdef MAP < handle
                 
                 for j=1:length(possible_move_sides)
                     obj.map_areas(possible_move_sides(j)).random_move_troops(obj.map_areas,obj.current_barrels)
-                    if obj.map_areas(possible_move_sides(j)).no_troop
+                    if obj.map_areas(possible_move_sides(j)).no_troop ...
+                                && obj.map_areas(possible_move_sides(j)).throne_token==0 ...
+                                && obj.map_areas(possible_move_sides(j)).land_type==1
                         obj.map_areas(possible_move_sides(j)).put_a_throne_token();
                     end
                 end
             end
-                        
-            for i=1:6
-                obj.map_areas(obj.capitals(i)).set_house_flag(i);
-                obj.current_barrels(i)=barrels_on_the_map(obj, i);
-            end
-            obj.refresh_map;
+            
+            obj.refresh_map; 
+            obj.update_barrels;            
             obj.cut_army;
+            
             for i=1:6,
                 obj.random_local_recruit(obj.capitals(i));
             end

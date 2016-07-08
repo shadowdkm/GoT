@@ -171,10 +171,10 @@ classdef AREA < handle
        end
        
        function add_troop(obj,troop_type)
-           if length(obj.troops)>=4
-               fprintf('Already 4 Troops @ Area %d\n', obj.index);
-               return;
-           end
+%            if length(obj.troops)>=4
+% %                fprintf('Already 4 Troops @ Area %d\n', obj.index);
+%                return;
+%            end
                
            obj.troops=[obj.troops,TROOP(troop_type,obj.house_flag)];
        end
@@ -231,12 +231,12 @@ classdef AREA < handle
        
        function put_a_throne_token(obj)
            obj.throne_token=1;
-           fprintf('A throne token put in Area %d\n',obj.index)
+           fprintf('\nA throne token put in Area %d',obj.index)
        end
        
        function remove_throne_token(obj)
            obj.throne_token=0;
-           fprintf('A throne token in Area %d in removed\n',obj.index)
+           fprintf('\nA throne token in Area %d in removed',obj.index)
        end
        
        function [pop_array,where_r_they]=sort_army(obj,current_map_areas,house_flag)
@@ -373,10 +373,13 @@ classdef AREA < handle
        function move_troop(obj, current_map_areas, one_march_order)
           current_map_areas(one_march_order.area_index).remove_all_troops;
           while(~isempty(one_march_order.element_array))
+              if current_map_areas(one_march_order.element_array(1).target).house_flag~=one_march_order.house_flag &&current_map_areas(one_march_order.element_array(1).target).throne_token==1
+                    current_map_areas(one_march_order.element_array(1).target).remove_throne_token;
+              end
               current_map_areas(one_march_order.element_array(1).target).set_house_flag(one_march_order.house_flag);
               for j=1:length(one_march_order.element_array(1).troop_type_array)
                   current_map_areas(one_march_order.element_array(1).target).add_troop(one_march_order.element_array(1).troop_type_array(j));
-              end              
+              end
               one_march_order.remove_first_element;
           end
 

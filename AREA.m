@@ -12,6 +12,7 @@ classdef AREA < handle
       connected_to=[];
       order=0;
       const_areaconns;
+      
     end
     
     
@@ -41,6 +42,24 @@ classdef AREA < handle
            end
            %fprintf('Area %d (%s) is created with %d barrels, %d crowns and %d towers.\n',index, L,barrels, crowns, towers);
            
+       end
+       
+       function remove_defence(obj)
+           obj.defence=0;
+%            fprintf('\nDefence @ Area %d is removed', obj.index)
+       end
+       
+       function number_of_ships=how_many_troops(obj, current_map_areas, house_flag, troop_type)
+           number_of_ships=0;
+           for i=1:58
+              if current_map_areas(i).house_flag==house_flag
+                  for j=1:length(current_map_areas(i).troops)
+                      if current_map_areas(i).troops(j).type==troop_type
+                          number_of_ships=number_of_ships+1;
+                      end
+                  end
+              end
+           end
        end
        
        function reachable=can_march_to(obj, current_map_areas)
@@ -300,8 +319,13 @@ classdef AREA < handle
            possible_port=find(obj.connected_to(51:58))+50;
            for i=1:length(obj.troops)
                if obj.troops(i).type==1
-                   recruit_comb=[recruit_comb;obj.index,2];
-                   recruit_comb=[recruit_comb;obj.index,3];
+                   if  obj.how_many_troops(current_map_areas,obj.house_flag,2)<5
+                        recruit_comb=[recruit_comb;obj.index,2];
+                   end
+                   
+                   if  obj.how_many_troops(current_map_areas,obj.house_flag,3)<2
+                        recruit_comb=[recruit_comb;obj.index,3];
+                   end
                    break;
                end
            end
@@ -314,7 +338,8 @@ classdef AREA < handle
                   testmap=copy_map(current_map_areas);
                   testmap(possible_seas(i)).set_house_flag(obj.house_flag);
                   testmap(possible_seas(i)).add_troop(0);
-                  if testmap(possible_seas(i)).check_population(testmap, obj.house_flag, barrels)==1
+                  if testmap(possible_seas(i)).check_population(testmap, obj.house_flag, barrels)==1 ...
+                          && obj.how_many_troops(testmap,obj.house_flag,0)<=6
                       recruit_comb=[recruit_comb;possible_seas(i),0];
                   end
               end
@@ -324,7 +349,8 @@ classdef AREA < handle
               testmap=copy_map(current_map_areas);
               testmap(possible_port).set_house_flag(obj.house_flag);
               testmap(possible_port).add_troop(0);
-              if testmap(possible_port).check_population(testmap, obj.house_flag, barrels)==1
+              if testmap(possible_port).check_population(testmap, obj.house_flag, barrels)==1 ...
+                          && obj.how_many_troops(testmap,obj.house_flag,0)<=6
                  recruit_comb=[recruit_comb;possible_port,0];
               end
            end
@@ -379,6 +405,9 @@ classdef AREA < handle
               current_map_areas(one_march_order.element_array(1).target).set_house_flag(one_march_order.house_flag);
               for j=1:length(one_march_order.element_array(1).troop_type_array)
                   current_map_areas(one_march_order.element_array(1).target).add_troop(one_march_order.element_array(1).troop_type_array(j));
+                  if current_map_areas(one_march_order.element_array(1).target).defence>0 && is_capital(one_march_order.element_array(1).target)~=one_march_order.house_flag
+                      current_map_areas(one_march_order.element_array(1).target).remove_defence;
+                  end
               end
               one_march_order.remove_first_element;
           end

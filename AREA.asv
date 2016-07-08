@@ -52,18 +52,21 @@ classdef AREA < handle
                reachable=[];
                return;
            end  
-           for looping_index=1:12
-              new_connection=0;
-              for inner_looping_index=1:12 
-                 if reachable(inner_looping_index)>0 && current_map_areas(inner_looping_index).house_flag==current_map_areas(index_of_this_land).house_flag
-                     reachable=reachable+current_map_areas(inner_looping_index).connected_to;
-                     new_connection=new_connection+1;
-                 end
-              end
-              if new_connection==0
-                  break;
-              end
-           end   
+           
+           if obj.land_type==1
+               for looping_index=1:12
+                  new_connection=0;
+                  for inner_looping_index=1:12 
+                     if reachable(inner_looping_index)>0 && current_map_areas(inner_looping_index).house_flag==current_map_areas(index_of_this_land).house_flag
+                         reachable=reachable+current_map_areas(inner_looping_index).connected_to;
+                         new_connection=new_connection+1;
+                     end
+                  end
+                  if new_connection==0
+                      break;
+                  end
+               end   
+           end
            
            if areatype(obj.index)==0 % sea
                reachable(13:50)=0;
@@ -182,17 +185,16 @@ classdef AREA < handle
        
        function remove_smallest_troop(obj)
            for i=1:length(obj.troops)
-               if  obj.troops(i).type==1 || obj.troops(i).type==0
+               if  obj.troops(i).type==0
                     obj.troops(i)=[];
-                    fprintf('[A Ftm/Shp cut from %d]', obj.index)
+                    fprintf('\n[A %s Shp cut from %d]', house_index2name(obj.house_flag),obj.index)
                     return;
                end
            end
            for i=1:length(obj.troops)
-               if  obj.troops(i).type==2
+               if  obj.troops(i).type==1
                     obj.troops(i)=[];
-                    
-                    fprintf('[A Knt cut from %d]', obj.index)
+                    fprintf('\n[A %s Ftm cut from %d]',house_index2name(obj.house_flag), obj.index)
                     return;
                end
            end
@@ -200,10 +202,19 @@ classdef AREA < handle
                if  obj.troops(i).type==3
                     obj.troops(i)=[];
                     
-                    fprintf('[A Sgn cut from %d]', obj.index)
+                    fprintf('\n[A %s Sgn cut from %d]',house_index2name(obj.house_flag), obj.index)
                     return;
                end
            end
+           for i=1:length(obj.troops)
+               if  obj.troops(i).type==2
+                    obj.troops(i)=[];
+                    
+                    fprintf('\n[A %s Knt cut from %d]',house_index2name(obj.house_flag), obj.index)
+                    return;
+               end
+           end
+           
        end
        
        function remove_all_troops(obj)
@@ -236,14 +247,14 @@ classdef AREA < handle
        
        function [validity,fault_indexs]=check_population(obj, current_map_areas, house_flag, barrels)
            fault_indexs=[];
-           capacity=supply(barrels);
-           [pop_array,pop_location]=sort_army(obj,current_map_areas,house_flag);
+           capacity=supply(barrels(house_flag));
+           [pop_array,pop_location]=obj.sort_army(current_map_areas,house_flag);
            if isempty(pop_array)
                validity=1;
                return;
            end
            capacity(length(pop_array)+1:end)=[];
-           fault_indexs=find(capacity-pop_array<0);
+           fault_indexs=pop_location(capacity-pop_array<0);
 %           fault_indexs=find(capacity(1:length(pop_array))-pop_array<0);
            if isempty(fault_indexs)
                validity=1;
@@ -292,24 +303,27 @@ classdef AREA < handle
               if current_map_areas(possible_seas(i)).house_flag~=obj.house_flag && current_map_areas(possible_seas(i)).house_flag~=0
                   valid_sea(i)=false;
               else
+%                   testmap=[];
                   testmap=copy_map(current_map_areas);
                   testmap(possible_seas(i)).set_house_flag(obj.house_flag);
                   testmap(possible_seas(i)).add_troop(0);
-                  if testmap(possible_seas(i)).check_population(testmap, obj.house_flag, barrels)
+                  if testmap(possible_seas(i)).check_population(testmap, obj.house_flag, barrels)==1
                       recruit_comb=[recruit_comb;possible_seas(i),0];
                   end
               end
            end
            %
            if ~isempty(possible_port)
+%               testmap=[];
               testmap=copy_map(current_map_areas);
               testmap(possible_port).set_house_flag(obj.house_flag);
               testmap(possible_port).add_troop(0);
-              if testmap(possible_port).check_population(testmap, obj.house_flag, barrels)
+              if testmap(possible_port).check_population(testmap, obj.house_flag, barrels)==1
                  recruit_comb=[recruit_comb;possible_port,0];
               end
            end
            %
+%            testmap=[];
            testmap=copy_map(current_map_areas);
            testmap(obj.index).add_troop(1);
            if testmap(obj.index).check_population(testmap, obj.house_flag, barrels)
@@ -325,13 +339,13 @@ classdef AREA < handle
            if recruit_detail(1)<=12 ||recruit_detail(1)>50
                current_map_areas(recruit_detail(1)).set_house_flag(obj.house_flag);
                current_map_areas(recruit_detail(1)).add_troop(0);
-               fprintf('\n+ a shp @ Area%d', obj.index);
+               fprintf('\n+ a %s shp @ Area%d', house_index2name(obj.house_flag), recruit_detail(1));
            elseif recruit_detail(2)==2
                for i=1:length(obj.troops)
                    if obj.troops(i).type==1
                        obj.troops(i)=[];
                        obj.add_troop(2);
-                       fprintf('\nup a ftm 2 knt @ Area%d', obj.index);
+                       fprintf('\n^ a %s ftm 2 knt @ Area%d', house_index2name(obj.house_flag), obj.index);
                        return;
                    end
                end
@@ -340,13 +354,13 @@ classdef AREA < handle
                    if obj.troops(i).type==1
                        obj.troops(i)=[];
                        obj.add_troop(3);
-                       fprintf('\nup a ftm 2 sgn @ Area%d', obj.index);
+                       fprintf('\n^ a %s ftm 2 sgn @ Area%d', house_index2name(obj.house_flag),obj.index);
                        return;
                    end
                end
            elseif recruit_detail(2)==1
                 obj.add_troop(1);
-                fprintf('\n+ a ftm @ Area%d', obj.index);
+                fprintf('\n+ a %s ftm @ Area%d', house_index2name(obj.house_flag), obj.index);
                 return;
            end
        end
@@ -374,15 +388,15 @@ classdef AREA < handle
        function valid_move=test_move(obj, current_map_areas, current_barrels,one_march_order)
           test_map=copy_map(current_map_areas);
           test_order=copy_order(one_march_order);
-           %target valid
-           for i=1:length(test_order.element_array)%check move validity
-             if test_map(test_order.area_index).house_flag~=test_map(test_order.element_array(i).target).house_flag&&test_map(test_order.element_array(i).target).house_flag~=0
+          %target valid
+          for i=1:length(test_order.element_array)%check move validity
+             if test_map(test_order.area_index).house_flag~=test_map(test_order.element_array(i).target).house_flag &&...
+                 test_map(test_order.element_array(i).target).house_flag~=0
                 valid_move=0;
                 return;
              end
           end
           
-%           fprintf('Testing Move:');
           obj.move_troop(test_map, test_order);
           
           %pop valid
@@ -399,10 +413,9 @@ classdef AREA < handle
            if obj.house_flag==0||isempty(obj.troops)
                return
            end
-           house_barrels=barrel_list(obj.house_flag);
            possible_orders=obj.march_sequence(current_map_areas);
            k=randi(size(possible_orders,2));
-           while(~obj.test_move(current_map_areas, house_barrels, possible_orders(k)))
+           while(~obj.test_move(current_map_areas, barrel_list, possible_orders(k)))
                possible_orders(k)=[];
                if isempty(possible_orders)
                    return;

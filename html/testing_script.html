@@ -1,0 +1,543 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      --><title>testing_script</title><meta name="generator" content="MATLAB 7.10"><meta name="date" content="2016-07-11"><meta name="m-file" content="testing_script"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><pre class="codeinput">clear,
+clc,
+m=MAP();
+m.list_map_as_text;
+round=1;
+<span class="keyword">while</span>(~sum(m.castles_occupied&gt;6)&amp;&amp;round&lt;=10)
+    m.random_a_around
+    fprintf(<span class="string">'-R %d-'</span>,round)
+    round=round+1;
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">
+1: Brt Tyr Drn Stk Lts Grj 
+2: Grj Tyr Lts Stk Drn Brt 
+3: Brt Lts Grj Tyr Drn Stk 
+
+Stk: 1B 2T 5.
+12[0] 46[1] 47[12] 
+Grj: 1B 1T 5.
+2[0] 41[12] 43[1] 51[0] 
+Lts: 1B 1T 5.
+3[0] 32[1] 37[12] 
+Tyr: 1B 1T 5.
+5[0] 21[1] 27[12] 
+Brt: 1B 1T 5.
+10[00] 23[12] 25[1] 
+Drn: 1B 1T 5.
+8[0] 13[12] 14[1] 
+
+Brt Area 10:[Shp 10-&gt;56][Shp 10-&gt;55]
+Brt Area 23:[FtmKnt 23-&gt;23]
+Brt Area 25:[Ftm 25-&gt;28]
+A throne token put in Area 25
+Tyr Area 5:[Shp 5-&gt;5]
+Tyr Area 21:[Ftm 21-&gt;17]
+A throne token put in Area 21
+Tyr Area 27:[FtmKnt 27-&gt;21]
+A throne token put in Area 27
+Drn Area 8:[Shp 8-&gt;54]
+Drn Area 13:[FtmKnt 13-&gt;13]
+Drn Area 14:[Ftm 14-&gt;14]
+Stk Area 12:[Shp 12-&gt;11]
+Stk Area 46:[Ftm 46-&gt;35]
+A throne token put in Area 46
+Stk Area 47:[FtmKnt 47-&gt;48]
+A throne token put in Area 47
+Lts Area 3:[Shp 3-&gt;4]
+Lts Area 32:[Ftm 32-&gt;32]
+Lts Area 37:[FtmKnt 37-&gt;32]
+A throne token put in Area 37
+Grj Area 51:[Shp 51-&gt;2]
+Grj Area 41:[FtmKnt 41-&gt;40]
+A throne token put in Area 41
+Grj Area 43:[Ftm 43-&gt;44]
+A throne token put in Area 43
+[A Lts Ftm cut from 32]
+roll =
+
+     7
+
+
+1: Brt Tyr Drn Stk Lts Grj 
+2: Grj Tyr Lts Stk Drn Brt 
+3: Brt Lts Grj Tyr Drn Stk 
+
+Stk: 3B 2T 3.
+11[0] 35[1] 46[.] 47[.] 48[12] 
+Grj: 3B 3T 3.
+2[00] 40[12] 41[.] 43[.] 44[1] 
+Lts: 0B 1T 4.
+4[0] 32[12] 37[.] 
+Tyr: 3B 1T 3.
+5[0] 17[1] 21[12.] 27[.] 
+Brt: 2B 2T 4.
+23[12] 25[.] 28[1] 55[0] 56[0] 
+Drn: 2B 1T 5.
+13[12] 14[1] 54[0] 
+-R 1-
+Brt Area 56:[Shp 56-&gt;10]
+Brt Area 55:[Shp 55-&gt;10]
+Brt Area 28:[Ftm 28-&gt;25]
+A throne token put in Area 28
+Tyr Area 5:[Shp 5-&gt;6]
+Tyr Area 17:[Ftm 17-&gt;15]
+A throne token put in Area 17
+Tyr Area 21:[Knt 21-&gt;22][Ftm 21-&gt;21]
+Drn Area 13:[FtmKnt 13-&gt;13]
+Drn Area 14:[Ftm 14-&gt;16]
+A throne token put in Area 14
+Drn Area 54:[Shp 54-&gt;8]
+Stk Area 11:[Shp 11-&gt;11]
+Stk Area 35:[Ftm 35-&gt;46]
+A throne token put in Area 35
+Stk Area 48:[Knt 48-&gt;48][Ftm 48-&gt;47]
+Lts Area 4:[Shp 4-&gt;4]
+Lts Area 32:[Knt 32-&gt;37][Ftm 32-&gt;29]
+A throne token put in Area 32
+Grj Area 2:[ShpShp 2-&gt;51]
+Grj Area 40:[Knt 40-&gt;43][Ftm 40-&gt;36]
+A throne token put in Area 40
+Grj Area 44:[Ftm 44-&gt;43]
+A throne token put in Area 44
+roll =
+
+     1
+
+
+1: Brt Tyr Drn Stk Lts Grj 
+2: Grj Tyr Lts Stk Drn Brt 
+3: Brt Lts Grj Tyr Drn Stk 
+
+Stk: 3B 2T 2.
+11[0] 35[.] 46[1.] 47[1.] 48[2] 
+Grj: 4B 4T 1.
+36[1] 40[.] 41[.] 43[21.] 44[.] 51[00] 
+Lts: 2B 1T 3.
+4[0] 29[1] 32[.] 37[2.] 
+Tyr: 3B 3T 2.
+6[0] 15[1] 17[.] 21[1.] 22[2] 27[.] 
+Brt: 2B 2T 3.
+10[00] 23[12] 25[1.] 28[.] 
+Drn: 3B 2T 4.
+8[0] 13[12] 14[.] 16[1] 
+-R 2-
+Brt Area 10:[Shp 10-&gt;56][Shp 10-&gt;55]
+Brt Area 23:[FtmKnt 23-&gt;23]
+Brt Area 25:[Ftm 25-&gt;24]
+Tyr Area 21:[Ftm 21-&gt;20]
+Tyr Area 15:[Ftm 15-&gt;17]
+A throne token put in Area 15
+Tyr Area 6:[Shp 6-&gt;5]
+Drn Area 8:[Shp 8-&gt;6]
+Drn Area 13:[FtmKnt 13-&gt;15]
+A throne token in Area 15 in removed
+A throne token put in Area 13
+Drn Area 16:[Ftm 16-&gt;19]
+A throne token put in Area 16
+Stk Area 11:[Shp 11-&gt;10]
+Stk Area 46:[Ftm 46-&gt;47]
+Lts Area 4:[Shp 4-&gt;2]
+Lts Area 29:[Ftm 29-&gt;31]
+A throne token put in Area 29
+Lts Area 37:[Knt 37-&gt;32]
+Grj Area 36:[Ftm 36-&gt;40]
+A throne token put in Area 36
+Grj Area 43:[Ftm 43-&gt;44][Knt 43-&gt;42]
+roll =
+
+     1
+
+
+1: Brt Tyr Drn Stk Lts Grj 
+2: Grj Tyr Lts Stk Drn Brt 
+3: Brt Lts Grj Tyr Drn Stk 
+
+Stk: 3B 2T 2.
+10[0] 35[.] 46[.] 47[11.] 48[2] 
+Grj: 4B 5T 0.
+36[.] 40[1.] 41[.] 42[2] 43[.] 44[1.] 51[00] 
+Lts: 2B 2T 2.
+2[0] 29[.] 31[1] 32[2.] 37[.] 
+Tyr: 3B 2T 1.
+5[0] 17[1.] 20[1] 21[.] 22[2] 27[.] 
+Brt: 2B 3T 3.
+23[12] 24[1] 25[.] 28[.] 55[0] 56[0] 
+Drn: 3B 3T 2.
+6[0] 13[.] 14[.] 15[12] 16[.] 19[1] 
+-R 3-
+Brt Area 23:[FtmKnt 23-&gt;23]
+Brt Area 24:[Ftm 24-&gt;24]
+Tyr Area 20:[Ftm 20-&gt;26]
+A throne token put in Area 20
+Tyr Area 17:[Ftm 17-&gt;20]
+Tyr Area 5:[Shp 5-&gt;53]
+Drn Area 6:[Shp 6-&gt;8]
+Drn Area 15:[Ftm 15-&gt;14][Knt 15-&gt;16]
+A throne token put in Area 15
+Drn Area 19:[Ftm 19-&gt;19]
+Stk Area 10:[Shp 10-&gt;10]
+Stk Area 47:[FtmFtm 47-&gt;48]
+Stk Area 48:[Ftm 48-&gt;48][KntFtm 48-&gt;47]
+Lts Area 2:[Shp 2-&gt;3]
+Lts Area 31:[Ftm 31-&gt;32]
+A throne token put in Area 31
+Lts Area 32:[KntFtm 32-&gt;31]
+Grj Area 40:[Ftm 40-&gt;40]
+Grj Area 51:[ShpShp 51-&gt;2]
+Grj Area 42:[Knt 42-&gt;43]
+Area42 is given up by Grj
+roll =
+
+     3
+
+
+1: Stk Lts Grj Brt Drn Tyr 
+2: Tyr Lts Drn Grj Brt Stk 
+3: Stk Lts Tyr Grj Drn Brt 
+
+Stk: 3B 2T 2.
+10[0] 35[.] 46[.] 47[21.] 48[1] 
+Grj: 4B 4T 0.
+2[00] 36[.] 40[1.] 41[.] 43[2.] 44[1.] 
+Lts: 2B 2T 1.
+3[0] 29[.] 31[21.] 32[.] 37[.] 
+Tyr: 3B 3T 0.
+17[.] 20[1.] 21[.] 22[2] 26[1] 27[.] 53[0] 
+Brt: 2B 3T 3.
+23[12] 24[1] 25[.] 28[.] 55[0] 56[0] 
+Drn: 3B 3T 1.
+8[0] 13[.] 14[1.] 15[.] 16[2.] 19[1] 
+-R 4-
+Stk Area 10:[Shp 10-&gt;9]
+Stk Area 47:[KntFtm 47-&gt;48]
+Stk Area 48:[FtmKntFtm 48-&gt;48]
+Lts Area 3:[Shp 3-&gt;52]
+Lts Area 31:[Ftm 31-&gt;31][Knt 31-&gt;36]
+A throne token in Area 36 in removed
+Grj Area 44:[Ftm 44-&gt;43]
+Grj Area 40:[Ftm 40-&gt;40]
+Grj Area 2:[Shp 2-&gt;3][Shp 2-&gt;4]
+Brt Area 23:[FtmKnt 23-&gt;23]
+Brt Area 55:[Shp 55-&gt;10]
+Brt Area 24:[Ftm 24-&gt;24]
+Drn Area 19:[Ftm 19-&gt;19]
+Drn Area 8:[Shp 8-&gt;8]
+Drn Area 14:[Ftm 14-&gt;16]
+Tyr Area 26:[Ftm 26-&gt;20]
+Area26 is given up by Tyr
+Tyr Area 20:[Ftm 20-&gt;26][Ftm 20-&gt;20]
+Tyr Area 22:[Knt 22-&gt;18]
+Area22 is given up by Tyr
+roll =
+
+     3
+
+
+1: Lts Grj Brt Drn Tyr Stk 
+2: Lts Grj Drn Stk Brt Tyr 
+3: Drn Tyr Stk Brt Grj Lts 
+
+Stk: 3B 2T 2.
+9[0] 35[.] 46[.] 47[.] 48[121] 
+Grj: 3B 3T 0.
+3[0] 4[0] 40[1.] 41[.] 43[21.] 44[.] 
+Lts: 3B 3T 1.
+29[.] 31[1.] 32[.] 36[2] 37[.] 52[0] 
+Tyr: 4B 2T 0.
+17[.] 18[2] 20[1.] 21[.] 26[1] 27[.] 53[0] 
+Brt: 2B 3T 3.
+10[0] 23[12] 24[1] 25[.] 28[.] 56[0] 
+Drn: 3B 3T 1.
+8[0] 13[.] 14[.] 15[.] 16[21.] 19[1] 
+-R 5-
+Lts Area 31:[Ftm 31-&gt;30]
+Lts Area 36:[Knt 36-&gt;31]
+A throne token put in Area 36
+Grj Area 40:[Ftm 40-&gt;42]
+Grj Area 43:[Knt 43-&gt;44][Ftm 43-&gt;40]
+Grj Area 3:[Shp 3-&gt;2]
+Brt Area 10:[Shp 10-&gt;11]
+Brt Area 23:[FtmKnt 23-&gt;23]
+Brt Area 24:[Ftm 24-&gt;25]
+A throne token put in Area 24
+Drn Area 8:[Shp 8-&gt;8]
+Drn Area 16:[KntFtm 16-&gt;17]
+A throne token in Area 17 in removed
+Drn Area 19:[Ftm 19-&gt;19]
+Tyr Area 18:[Knt 18-&gt;18]
+Tyr Area 26:[Ftm 26-&gt;26]
+Tyr Area 53:[Shp 53-&gt;5]
+Stk Area 9:[Shp 9-&gt;10]
+Stk Area 48:[FtmKntFtm 48-&gt;48]
+roll =
+
+     1
+
+
+1: Lts Grj Brt Drn Tyr Stk 
+2: Lts Grj Drn Stk Brt Tyr 
+3: Drn Tyr Stk Brt Grj Lts 
+
+Stk: 3B 2T 2.
+10[0] 35[.] 46[.] 47[.] 48[121] 
+Grj: 3B 4T 0.
+2[0] 4[0] 40[1.] 41[.] 42[1] 43[.] 44[2.] 
+Lts: 3B 4T 0.
+29[.] 30[1] 31[2.] 32[.] 36[.] 37[.] 52[0] 
+Tyr: 3B 2T 0.
+5[0] 18[2] 20[1.] 21[.] 26[1] 27[.] 
+Brt: 2B 3T 2.
+11[0] 23[12] 24[.] 25[1.] 28[.] 56[0] 
+Drn: 4B 3T 1.
+8[0] 13[.] 14[.] 15[.] 16[.] 17[21] 19[1] 
+-R 6-
+Lts Area 30:[Ftm 30-&gt;29]
+Area30 is given up by Lts
+Lts Area 31:[Knt 31-&gt;31]
+Lts Area 52:[Shp 52-&gt;3]
+Grj Area 2:[Shp 2-&gt;2]
+Grj Area 40:[Ftm 40-&gt;42]
+Grj Area 44:[Knt 44-&gt;36]
+A throne token in Area 36 in removed
+Brt Area 11:[Shp 11-&gt;12]
+Brt Area 23:[FtmKnt 23-&gt;23]
+Brt Area 25:[Ftm 25-&gt;24]
+Drn Area 8:[Shp 8-&gt;54]
+Drn Area 17:[Ftm 17-&gt;15][Knt 17-&gt;16]
+A throne token put in Area 17
+Drn Area 19:[Ftm 19-&gt;19]
+Tyr Area 18:[Knt 18-&gt;21]
+Area18 is given up by Tyr
+Tyr Area 5:[Shp 5-&gt;5]
+Tyr Area 26:[Ftm 26-&gt;27]
+Area26 is given up by Tyr
+Stk Area 10:[Shp 10-&gt;9]
+Stk Area 48:[FtmKnt 48-&gt;48][Ftm 48-&gt;47]
+roll =
+
+     7
+
+
+1: Lts Grj Brt Drn Tyr Stk 
+2: Lts Grj Drn Stk Brt Tyr 
+3: Drn Tyr Stk Brt Grj Lts 
+
+Stk: 3B 2T 2.
+9[0] 35[.] 46[.] 47[1.] 48[12] 
+Grj: 4B 5T 0.
+2[0] 4[0] 36[2] 40[.] 41[.] 42[11] 43[.] 44[.] 
+Lts: 2B 2T 0.
+3[0] 29[1.] 31[2.] 32[.] 37[.] 
+Tyr: 2B 1T 0.
+5[0] 20[1.] 21[2.] 27[1.] 
+Brt: 2B 3T 2.
+12[0] 23[12] 24[1.] 25[.] 28[.] 56[0] 
+Drn: 4B 3T 0.
+13[.] 14[.] 15[1.] 16[2.] 17[.] 19[1] 54[0] 
+-R 7-
+Lts Area 3:[Shp 3-&gt;3]
+Lts Area 29:[Ftm 29-&gt;30]
+Lts Area 31:[Knt 31-&gt;32]
+Grj Area 36:[Knt 36-&gt;37]
+A throne token in Area 37 in removed
+Area36 is given up by Grj
+Grj Area 42:[Ftm 42-&gt;46][Ftm 42-&gt;42]
+A throne token in Area 46 in removed
+Grj Area 2:[Shp 2-&gt;4]
+Brt Area 24:[Ftm 24-&gt;24]
+Brt Area 56:[Shp 56-&gt;10]
+Brt Area 23:[FtmKnt 23-&gt;25]
+A throne token put in Area 23
+Drn Area 19:[Ftm 19-&gt;19]
+Drn Area 16:[Knt 16-&gt;15]
+Drn Area 15:[Ftm 15-&gt;16][Knt 15-&gt;13]
+Tyr Area 21:[Knt 21-&gt;21]
+Tyr Area 20:[Ftm 20-&gt;17]
+A throne token in Area 17 in removed
+Stk Area 9:[Shp 9-&gt;9]
+Stk Area 48:[Knt 48-&gt;48][Ftm 48-&gt;47]
+roll =
+
+     2
+
+
+1: Lts Grj Brt Drn Tyr Stk 
+2: Lts Grj Drn Stk Brt Tyr 
+3: Drn Tyr Stk Brt Grj Lts 
+
+Stk: 3B 1T 2.
+9[0] 35[.] 47[11.] 48[2] 
+Grj: 3B 6T 0.
+4[00] 37[2] 40[.] 41[.] 42[1] 43[.] 44[.] 46[1] 
+Lts: 2B 2T 0.
+3[0] 29[.] 30[1] 31[.] 32[2.] 
+Tyr: 3B 1T 0.
+5[0] 17[1] 20[.] 21[2.] 27[1.] 
+Brt: 2B 3T 1.
+10[0] 12[0] 23[.] 24[1.] 25[12.] 28[.] 
+Drn: 3B 3T 0.
+13[2.] 14[.] 15[.] 16[1.] 19[1] 54[0] 
+-R 8-
+Lts Area 3:[Shp 3-&gt;3]
+Lts Area 30:[Ftm 30-&gt;30]
+Lts Area 32:[Knt 32-&gt;31]
+Grj Area 37:[Knt 37-&gt;32]
+A throne token in Area 32 in removed
+Area37 is given up by Grj
+Grj Area 46:[Ftm 46-&gt;46]
+Grj Area 4:[Shp 4-&gt;6][Shp 4-&gt;2]
+Brt Area 25:[Ftm 25-&gt;24][Knt 25-&gt;26]
+Brt Area 24:[Ftm 24-&gt;25][Ftm 24-&gt;24]
+Brt Area 10:[Shp 10-&gt;8]
+Drn Area 13:[Knt 13-&gt;15]
+Drn Area 19:[Ftm 19-&gt;19]
+Drn Area 16:[Ftm 16-&gt;15]
+Tyr Area 5:[Shp 5-&gt;5]
+Tyr Area 21:[Knt 21-&gt;20]
+Stk Area 9:[Shp 9-&gt;10]
+Stk Area 47:[FtmFtm 47-&gt;48]
+Stk Area 48:[Ftm 48-&gt;47][KntFtm 48-&gt;48]
+roll =
+
+     5
+
+
+Collect Thrones Event
+
+1: Lts Grj Brt Drn Tyr Stk 
+2: Lts Grj Drn Stk Brt Tyr 
+3: Drn Tyr Stk Brt Grj Lts 
+
+Stk: 3B 1T 3.
+10[0] 35[.] 47[1.] 48[21] 
+Grj: 3B 5T 3.
+2[0] 6[0] 32[2] 40[.] 41[.] 42[1] 43[.] 44[.] 46[1] 
+Lts: 2B 3T 3.
+3[0] 29[.] 30[1] 31[2.] 37[] 
+Tyr: 3B 1T 3.
+5[0] 17[1] 20[2.] 21[.] 27[1.] 
+Brt: 2B 4T 4.
+8[0] 12[0] 23[.] 24[1.] 25[1.] 26[2] 28[.] 
+Drn: 3B 3T 2.
+13[.] 14[.] 15[21.] 16[.] 19[1] 54[0] 
+-R 9-
+Lts Area 3:[Shp 3-&gt;3]
+Lts Area 30:[Ftm 30-&gt;30]
+Lts Area 31:[Knt 31-&gt;29]
+Grj Area 2:[Shp 2-&gt;2]
+Grj Area 32:[Knt 32-&gt;33]
+A throne token put in Area 32
+Grj Area 46:[Ftm 46-&gt;46]
+Brt Area 12:[Shp 12-&gt;12]
+Brt Area 25:[Ftm 25-&gt;24]
+Brt Area 8:[Shp 8-&gt;7]
+Drn Area 15:[KntFtm 15-&gt;13]
+Drn Area 19:[Ftm 19-&gt;19]
+Drn Area 54:[Shp 54-&gt;8]
+Tyr Area 17:[Ftm 17-&gt;21]
+A throne token put in Area 17
+Tyr Area 20:[Knt 20-&gt;17]
+Stk Area 10:[Shp 10-&gt;11]
+Stk Area 48:[Knt 48-&gt;48][Ftm 48-&gt;47]
+roll =
+
+     5
+
+
+Collect Thrones Event
+
+1: Lts Grj Brt Drn Tyr Stk 
+2: Lts Grj Drn Stk Brt Tyr 
+3: Drn Tyr Stk Brt Grj Lts 
+
+Stk: 3B 1T 4.
+11[0] 35[.] 47[11.] 48[2] 
+Grj: 4B 5T 5.
+2[0] 6[0] 32[.] 33[2] 40[.] 41[.] 42[1] 43[.] 44[.] 46[1] 
+Lts: 2B 3T 6.
+3[0] 29[2.] 30[1] 31[.] 37[] 
+Tyr: 3B 1T 5.
+5[0] 17[2.] 20[.] 21[1.] 27[1.] 
+Brt: 2B 4T 7.
+7[0] 12[0] 23[.] 24[11.] 25[.] 26[2] 28[.] 
+Drn: 3B 3T 4.
+8[0] 13[21.] 14[.] 15[.] 16[.] 19[1] 
+-R 10-</pre><p class="footer"><br>
+      Published with MATLAB&reg; 7.10<br></p></div><!--
+##### SOURCE BEGIN #####
+clear,
+clc,
+m=MAP();
+m.list_map_as_text;
+round=1;
+while(~sum(m.castles_occupied>6)&&round<=10)   
+    m.random_a_around
+    fprintf('-R %d-',round)
+    round=round+1;
+end
+##### SOURCE END #####
+--></body></html>

@@ -7,6 +7,7 @@ classdef ORDER < handle
         support=0;
         raid=0;
         defence=0;
+        star=0;
         the_order=[];
     end
     methods

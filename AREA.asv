@@ -10,7 +10,7 @@ classdef AREA < handle
       barrels = 0;
       towers = 0;
       connected_to=[];
-      order=0;
+      order=[];
       const_areaconns;
       
     end
@@ -30,7 +30,7 @@ classdef AREA < handle
            obj.barrels=barrels;
            obj.towers=towers;                      
            obj.connected_to=areaconns(:,index);
-
+           obj.order=ORDER(0,index);
 
 
            if type==2
@@ -42,10 +42,6 @@ classdef AREA < handle
            end
            %fprintf('Area %d (%s) is created with %d barrels, %d crowns and %d towers.\n',index, L,barrels, crowns, towers);
            
-       end
-       
-       function set_order(obj,order)
-           obj.order=order;
        end
        
        function remove_defence(obj)
@@ -252,9 +248,13 @@ classdef AREA < handle
            obj.troops=[];
        end
        
-       function put_a_throne_token(obj)
-           obj.throne_token=1;
-           fprintf('\nA throne token put in Area %d',obj.index)
+       function put_a_throne_token(obj, the_map)
+           if the_map.use_a_throne_token(obj.house_flag)
+               obj.throne_token=1;
+               fprintf('\nA throne token put in Area %d',obj.index)
+           else
+               fprintf('\nArea%d is given up by %s',obj.index, house_index2name(obj.house_flag))
+           end
        end
        
        function remove_throne_token(obj)

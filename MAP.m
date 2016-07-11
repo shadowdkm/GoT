@@ -15,11 +15,12 @@ classdef MAP < handle
             load map_res
             load AreaConns
             obj.map_areas=[];
-            %             obj.rank1=randperm(6);
-            %             obj.rank2=randperm(6);
-            %             obj.rank3=randperm(6);
+                        obj.rank1=randperm(6);
+                        obj.rank2=randperm(6);
+                        obj.rank3=randperm(6);
             for i=1:size(areaconns,1)
                 obj.map_areas=[obj.map_areas,AREA(i, areatype(i), map_resourses(i,5), map_resourses(i,3), map_resourses(i,2), map_resourses(i,4))];
+                
             end
             for i=1:6
                 obj.map_areas(obj.capitals(i)).set_house_flag(i);
@@ -92,6 +93,47 @@ classdef MAP < handle
             end
         end
         
+        function thrones=throne_token_on_the_map(obj,house_flag)
+            thrones=[0,0,0,0,0,0];
+            for i=1:58
+                if obj.map_areas(i).house_flag>0 && obj.map_areas(i).throne_token>0
+                    thrones(obj.map_areas(i).house_flag)=thrones(obj.map_areas(i).house_flag)+1;
+                end
+            end
+            if nargin==2
+                thrones=thrones(house_flag);
+            end
+        end
+        
+        function collect_thrones_event(obj)
+            fprintf('\nCollect Thrones Event\n');
+            thrones=[0,0,0,0,0,0];
+            for i=1:58
+                if obj.map_areas(i).house_flag>0 && obj.map_areas(i).crowns>0
+                    thrones(obj.map_areas(i).house_flag)=thrones(obj.map_areas(i).house_flag)+obj.map_areas(i).crowns;
+                end
+            end
+            throne_pool=18-obj.throne_token_on_the_map();
+            obj.current_crowns=obj.current_crowns+thrones;
+            obj.current_crowns(obj.current_crowns>throne_pool)=throne_pool(obj.current_crowns>throne_pool);
+        end
+        
+        function auction_event(obj)
+            fprintf('\nAuction Event\n');
+            obj.rank1=randperm(6);
+            obj.rank2=randperm(6);
+            obj.rank3=randperm(6);
+        end
+        
+        function valid_use=use_a_throne_token(obj,house_flag)
+            if obj.current_crowns(house_flag)>0
+                obj.current_crowns(house_flag)=obj.current_crowns(house_flag)-1;
+                valid_use=true;
+            else
+                valid_use=false;
+            end
+        end
+        
         function list_map_as_text(obj)
             %             fprintf('\n*****************************')
             
@@ -100,7 +142,7 @@ classdef MAP < handle
             fprintf('\n3: '), for i=1:6,    fprintf('%s ',house_index2name(obj.rank3(i))),  end
             fprintf('\n');
             for i=6:-1:1
-                fprintf('\n%s: %dB %dT',house_index2name(i),obj.current_barrels(i),obj.castles_occupied(i))
+                fprintf('\n%s: %dB %dT %d.',house_index2name(i),obj.current_barrels(i),obj.castles_occupied(i),obj.current_crowns(i))
                 area_list2disp=obj.areas_of_a_house(i);
                 fprintf('\n');
                 for j=1:length(area_list2disp)
@@ -152,6 +194,10 @@ classdef MAP < handle
         end
         
         function random_local_recruit(obj,index)
+            if obj.map_areas(index).house_flag==0
+                return;
+            end
+            
             if obj.map_areas(index).towers==1
                 rec_comb=obj.recruit_combinations(index);
                 if isempty(rec_comb),return,end
@@ -173,6 +219,14 @@ classdef MAP < handle
             end
         end
         
+        function recruit_event(obj)
+            fprintf('\nRecruit Event\n');
+            recruit_order=randperm(50);
+            for i=1:50
+                obj.random_local_recruit(recruit_order(i));
+            end
+        end
+        
         function random_a_around(obj)
             for i=1:6
                 possible_move_sides=obj.areas_of_a_house_with_troops(obj.rank1(i));
@@ -186,7 +240,7 @@ classdef MAP < handle
                     if obj.map_areas(possible_move_sides(j)).no_troop ...
                                 && obj.map_areas(possible_move_sides(j)).throne_token==0 ...
                                 && obj.map_areas(possible_move_sides(j)).land_type==1
-                        obj.map_areas(possible_move_sides(j)).put_a_throne_token();
+                        obj.map_areas(possible_move_sides(j)).put_a_throne_token(obj);
                     end
                 end
             end
@@ -195,9 +249,17 @@ classdef MAP < handle
             obj.update_barrels;            
             obj.cut_army;
             
-            for i=1:6,
-                obj.random_local_recruit(obj.capitals(i));
+            roll=randi(7)
+            if roll==5
+                obj.collect_thrones_event;
+            elseif roll==4
+                obj.recruit_event;
+            elseif roll==3
+                obj.rank1=randperm(6);
+                obj.rank2=randperm(6);
+                obj.rank3=randperm(6);
             end
+           
             
             obj.list_map_as_text;
         end

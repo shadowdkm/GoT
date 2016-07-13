@@ -12,7 +12,7 @@ classdef AREA < handle
       connected_to=[];
       order=[];
       const_areaconns;
-      
+      land_port_connection=[];
     end
     
     
@@ -30,16 +30,20 @@ classdef AREA < handle
            obj.barrels=barrels;
            obj.towers=towers;                      
            obj.connected_to=areaconns(:,index);
-           obj.order=ORDER(0,index);
-
-
-           if type==2
-               L='port';
-           elseif type==0
-               L='sea';
-           else
-               L='land';
+           obj.land_port_connection=portconns(portconns(:,1)==index,2);
+           if isempty(obj.land_port_connection)
+               obj.land_port_connection=false;
            end
+           obj.order=ORDER(0);
+
+
+%            if type==2
+%                L='port';
+%            elseif type==0
+%                L='sea';
+%            else
+%                L='land';
+%            end
            %fprintf('Area %d (%s) is created with %d barrels, %d crowns and %d towers.\n',index, L,barrels, crowns, towers);
            
        end
@@ -47,6 +51,11 @@ classdef AREA < handle
        function remove_defence(obj)
            obj.defence=0;
 %            fprintf('\nDefence @ Area %d is removed', obj.index)
+       end
+       
+       function set_order(obj, new_order)
+           obj.order=[];
+           obj.order=new_order;
        end
        
        function number_of_ships=how_many_troops(obj, current_map_areas, house_flag, troop_type)
@@ -94,6 +103,40 @@ classdef AREA < handle
                reachable(51:end)=0;
            elseif areatype(obj.index)==2    % port
                reachable(13:end)=0;
+           end
+       end
+       
+       function support=can_be_supported_by(obj, current_map_areas, for_attack)
+           support=0;
+           reachables=obj.const_areaconns;
+           if obj.land_type==0
+               reachables(13:end)=0;
+           elseif obj.land_type==1
+               reachables(51:end)=0;
+           else
+               reachables=[];
+           end
+           reachables=find(reachables);
+           for i=1:length(reachables)
+               if current_map_areas(reachables(i)).house_flag==obj.house_flag && current_map_areas(reachables(i)).order.supporting==1
+                   for j=1:length(current_map_areas(reachables(i)).troops)
+                       if for_attack==1
+                           if current_map_areas(reachables(i)).troops(j).type==1||current_map_areas(reachables(i)).troops(j).type==0
+                               support=support+1;
+                           elseif current_map_areas(reachables(i)).troops(j).type==2
+                               support=support+2;
+                           elseif current_map_areas(reachables(i)).troops(j).type==3
+                               support=support+4;
+                           end
+                       else
+                           if current_map_areas(reachables(i)).troops(j).type==1||current_map_areas(reachables(i)).troops(j).type==0
+                               support=support+1;
+                           elseif current_map_areas(reachables(i)).troops(j).type==2
+                               support=support+2;
+                           end
+                       end
+                   end
+               end
            end
        end
        

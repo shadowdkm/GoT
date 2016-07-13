@@ -9,3 +9,4 @@ while(~sum(m.castles_occupied>6)&&round<=10)
     round=round+1;
 end
 
+%?????

@@ -50,18 +50,22 @@ classdef MAP < handle
         function rand_order_array=random_orders(obj, house_flag)
             stars_can_use=[3,3,2,1,0,0];
             stars_can_use=stars_can_use(obj.rank3(house_flag));
-            orders_types=[1,1,1,2,2,2,3,3,3,4,4,4,5,5,5];
-            orders_types=orders_types(randperm(15));
+            
+            orders_types=[1,1,1,5,4,4,4,5,5,3,3,3,2,2,2];
             stared_orders=[0,0,0,0,0];
             stared_orders(1:stars_can_use)=1;
-            stared_orders=stared_orders(randperm(5));            
+            stared_orders=stared_orders(randperm(5));   
+            
+            unusable_orders=find(stared_orders==0);
+            orders_types(unusable_orders*3)=[];
+            
             rand_order_array=[];
-            for i=1:15
+            for i=1:length(orders_types)
                 rand_order_array=[rand_order_array,ORDER(house_flag)];
             end
             
             %mar, rai, def, sup, res
-            for i=1:15
+            for i=1:length(orders_types)
                 if orders_types(i)==1
                     rand_order_array(i).march;
                 elseif orders_types(i)==2
@@ -185,20 +189,24 @@ classdef MAP < handle
                         fprintf('%d',obj.map_areas(area_list2disp(j)).troops(k).type);
                     end
                     if obj.map_areas(area_list2disp(j)).throne_token>0
-                        fprintf('.');
-                    end
-                    if obj.map_areas(area_list2disp(j)).order.marching==1
-                        fprintf('(P)');
-                    elseif obj.map_areas(area_list2disp(j)).order.resting==1
-                        fprintf('(=)');
-                    elseif obj.map_areas(area_list2disp(j)).order.supporting==1
-                        fprintf('(T)');
-                    elseif obj.map_areas(area_list2disp(j)).order.raiding==1
-                        fprintf('(!)');
-                    elseif obj.map_areas(area_list2disp(j)).order.defencing==1
-                        fprintf('(D)');
+                        fprintf('#');
                     end
                     
+                    
+                    if obj.map_areas(area_list2disp(j)).order.marching==1
+                        fprintf('(P');
+                    elseif obj.map_areas(area_list2disp(j)).order.resting==1
+                        fprintf('(=');
+                    elseif obj.map_areas(area_list2disp(j)).order.supporting==1
+                        fprintf('(T');
+                    elseif obj.map_areas(area_list2disp(j)).order.raiding==1
+                        fprintf('(!');
+                    elseif obj.map_areas(area_list2disp(j)).order.defencing==1
+                        fprintf('(D');
+                    end
+                    if obj.map_areas(area_list2disp(j)).order.star==1
+                        fprintf('*');
+                    end
                     fprintf('] ');
                 end
             end
@@ -296,7 +304,7 @@ classdef MAP < handle
                 possible_order_sites=possible_order_sites(randperm(length(possible_order_sites)));
                 rand_order_array=obj.random_orders(i);
                 
-                for j=1:min(length(possible_order_sites),15)
+                for j=1:min(length(possible_order_sites),length(rand_order_array))
                     obj.map_areas(possible_order_sites(j)).set_order(rand_order_array(j));   
                 end
             end
@@ -305,7 +313,8 @@ classdef MAP < handle
             
             for i=1:6
                 possible_move_sites=[];
-                for j=1:min(length(possible_order_sites),15)
+                possible_order_sites=obj.areas_of_a_house_with_troops(obj.rank1(i));
+                for j=1:min(length(possible_order_sites),length(rand_order_array))
                     if obj.map_areas(possible_order_sites(j)).order.marching==1
                         possible_move_sites=[possible_move_sites,possible_order_sites(j)];
                     end

@@ -158,9 +158,23 @@ classdef MAP < handle
         
         function auction_event(obj)
             fprintf('\nAuction Event\n');
-            obj.rank1=randperm(6);
-            obj.rank2=randperm(6);
-            obj.rank3=randperm(6);
+            bids=[];
+            for i=1:6
+                bid=split4(obj.current_crowns(i));
+                obj.current_crowns(i)=obj.current_crowns(i)-sum(bid);
+                bids=[bids;bid];                
+            end
+            
+            
+            [bid1,obj.rank1]=sort(bids(:,1),'descend');
+            [bid2,obj.rank2]=sort(bids(:,2),'descend');
+            [bid3,obj.rank3]=sort(bids(:,3),'descend');
+            
+            fprintf('\n1: '), for i=1:6,    fprintf('%s(%d) ',house_index2name(obj.rank1(i)),bid1(i)),  end
+            fprintf('\n2: '), for i=1:6,    fprintf('%s(%d) ',house_index2name(obj.rank2(i)),bid2(i)),  end
+            fprintf('\n3: '), for i=1:6,    fprintf('%s(%d) ',house_index2name(obj.rank3(i)),bid3(i)),  end
+            fprintf('\n');
+            
         end
         
         function valid_use=use_a_throne_token(obj,house_flag)

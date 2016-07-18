@@ -106,6 +106,47 @@ classdef AREA < handle
            end
        end
        
+       function retractable=can_retract_to(obj, current_map_areas)
+           index_of_this_land=obj.index;
+           flag=current_map_areas(index_of_this_land).house_flag;
+           retractable=obj.const_areaconns(:,index_of_this_land);
+           
+           if flag==0
+               retractable=[];
+               return;
+           end  
+           
+           if obj.land_type==1
+               for looping_index=1:12
+                  new_connection=0;
+                  for inner_looping_index=1:12 
+                     if reachable(inner_looping_index)>0 && current_map_areas(inner_looping_index).house_flag==current_map_areas(index_of_this_land).house_flag
+                         reachable=reachable+current_map_areas(inner_looping_index).connected_to;
+                         new_connection=new_connection+1;
+                     end
+                  end
+                  if new_connection==0
+                      break;
+                  end
+               end   
+           end
+           
+           if areatype(obj.index)==0 % sea
+               retractable(13:50)=0;
+           elseif areatype(obj.index)==1 % land
+               retractable(1:12)=0;
+               retractable(51:end)=0;
+           elseif areatype(obj.index)==2    % port
+               retractable(1:end)=0;
+           end
+           
+           for i=1:50
+              if  retractable(i)>0 && current_map_areas(i).house_flag~=current_map_areas(index_of_this_land).house_flag && current_map_areas(i).house_flag~=0
+                retractable(i)=0;
+              end
+           end
+       end
+       
        function support=can_be_supported_by(obj, current_map_areas, for_attack)
            support=0;
            reachables=obj.const_areaconns;

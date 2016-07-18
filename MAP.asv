@@ -158,6 +158,15 @@ classdef MAP < handle
         
         function auction_event(obj)
             fprintf('\nAuction Event\n');
+            bids=[];
+            for i=1:6
+                bid=split4(obj.current_crowns(i));
+                obj.current_crowns(i)=obj.current_crowns(i)-sum(bid);
+                bids=[bids,bid];
+                
+            end
+            
+            
             obj.rank1=randperm(6);
             obj.rank2=randperm(6);
             obj.rank3=randperm(6);
@@ -189,22 +198,22 @@ classdef MAP < handle
                         fprintf('%d',obj.map_areas(area_list2disp(j)).troops(k).type);
                     end
                     if obj.map_areas(area_list2disp(j)).throne_token>0
-                        fprintf('.');
+                        fprintf('#');
                     end
                     
                     
                     if obj.map_areas(area_list2disp(j)).order.marching==1
-                        fprintf('(P)');
+                        fprintf('(P');
                     elseif obj.map_areas(area_list2disp(j)).order.resting==1
-                        fprintf('(=)');
+                        fprintf('(=');
                     elseif obj.map_areas(area_list2disp(j)).order.supporting==1
-                        fprintf('(T)');
+                        fprintf('(T');
                     elseif obj.map_areas(area_list2disp(j)).order.raiding==1
-                        fprintf('(!)');
+                        fprintf('(!');
                     elseif obj.map_areas(area_list2disp(j)).order.defencing==1
-                        fprintf('(D)');
+                        fprintf('(D');
                     end
-                    if obj.map_areas(area_list2disp(j)).star==1
+                    if obj.map_areas(area_list2disp(j)).order.star==1
                         fprintf('*');
                     end
                     fprintf('] ');

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html style='width:100%; height:100%; border:0; margin:0; padding:0;'>
+  <head>
+    <meta http-equiv='X-UA-Compatible' content='chrome=1'/>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'/>
+    <meta http-equiv='Content-Type' content='text/html;charset=utf-8'/>
+    <link rel='stylesheet' type='text/css' href='http://www.x3dom.org/x3dom/release/x3dom.css'/>
+    <script type='text/javascript' src='http://www.x3dom.org/x3dom/release/x3dom.js'></script>
+    <style>.x3dom-logContainer { bottom: 0px; position: absolute; }
+    </style>
+  </head>
+  <body style='width:100%; height:100%; border:0; margin:0; padding:0;'>
+    <div id='HUDs_Div'> 
+      <div id='X3DOM_AOPT_Links' class='group' style='margin:26px 2px 2px; padding:4px; background-color:rgba(199,202,204,.7); position:absolute; z-index:1000;'> 
+        <a href='http://www.x3dom.org'>X3DOM
+        </a> output created with 
+        <a href='http://www.instantreality.org'>InstantReality
+        </a> aopt tool. 
+      </div> 
+      <div id='Interaction_Toolbox' style='margin:2px; padding:4px 150px 4px 4px; background-color:rgba(199,202,204,.7); position:absolute; z-index:1000; right:0px; top:0px;'> 
+        <table> 
+          <tr> 
+            <td>Navigation Mode: 
+            </td> 
+            <td align='right'> 
+              <select style='float:right;' onchange='document.getElementById(&apos;x3dElement&apos;).runtime[value]();'> 
+                <option selected='selected' value='examine'>Examine 
+                </option> 
+                <option value='turnTable'>TurnTable 
+                </option> 
+                <option value='lookAt'>LookAt 
+                </option> 
+                <option value='lookAround'>LookAround 
+                </option> 
+                <option value='fly'>Fly 
+                </option> 
+                <option value='freeFly'>FreeFly 
+                </option> 
+                <option value='helicopter'>Helicopter 
+                </option> 
+                <option value='walk'>Walk 
+                </option>  
+                <option value='noNav'>None 
+                </option> 
+              </select> 
+            </td> 
+          </tr> 
+          <tr> 
+            <td>Debug Display: 
+            </td> 
+            <td align='right'> 
+              <input type='checkbox' onclick='document.getElementById(&apos;x3dElement&apos;).runtime.statistics(this.checked);'> 
+              </input> Stats 
+              <input type='checkbox' onclick='document.getElementById(&apos;x3dElement&apos;).runtime.debug();'> 
+              </input> Log 
+            </td> 
+          </tr> 
+          <tr> 
+            <td> 
+              <button onclick='document.getElementById(&apos;x3dElement&apos;).runtime.showAll();'> Show Everything 
+              </button> 
+            </td> 
+            <td> 
+              <button onclick='document.getElementById(&apos;x3dElement&apos;).runtime.resetView();'> Reset View 
+              </button> 
+            </td> 
+          </tr> 
+        </table> 
+      </div> 
+    </div>
+    <x3d id='x3dElement' showStat='false' showLog='false' style='width:100%; height:100%; border:0; margin:0; padding:0;'>
+      <scene DEF='scene'>
+        <transform translation='3000 0 0'>
+          <transform DEF='Blades_2'>
+            <transform translation='0 80 0'>
+              <shape DEF='AOPT_Shape_72341328'>
+                <appearance DEF='AOPT_Appearance_62415632'>
+                  <material></material>
+                </appearance>
+                <extrusion crossSection='0 0 0.5 0 1.25 2.2367 2.5 3.268 5 4.443 7.5 5.25 10 5.853 15 6.682 20 7.172 25 7.427 30 7.502 40 7.254 50 6.617 70 4.58 80 3.279 90 1.181 95 1.008 100 0.158 95 -1.008 90 -1.181 80 -3.279 70 -4.58 50 -6.617 40 -7.254 30 -7.502 25 -7.427 20 -7.172 15 -6.682 10 -5.853 7.5 -5.25 5 -4.443 2.5 -3.268 1.25 -2.2367 0.5 0 0 0' orientation='0 1 0 1.04 0 1 0 0.52 0 0 1 0 0 0 1 0.52' scale='1 1 2 2 1 1 0.5 0.5' spine='0 1 0 0 100 0 0 300 0 0 1000 0'></extrusion>
+              </shape>
+            </transform>
+            <transform rotation='0 0 -1 2.0944' translation='40 -69.28 0'>
+              <shape USE='AOPT_Shape_72341328'></shape>
+            </transform>
+            <transform rotation='0 0 1 2.0944' translation='-40 -69.28 0'>
+              <shape USE='AOPT_Shape_72341328'></shape>
+            </transform>
+            <transform scale='1.05 1.05 4.15' translation='0 0 -140'>
+              <shape>
+                <appearance USE='AOPT_Appearance_62415632'></appearance>
+                <sphere radius='100'></sphere>
+              </shape>
+            </transform>
+          </transform>
+          <transform DEF='AOPT_Transform_72369776' scale='60 1700 60' translation='0 -1700 -275'>
+            <shape>
+              <appearance USE='AOPT_Appearance_62415632'></appearance>
+              <extrusion crossSection='1 -2.44921e-016 0.932472 -0.361242 0.739009 -0.673696 0.445738 -0.895164 0.0922675 -0.995734 -0.273664 -0.961825 -0.602635 -0.798017 -0.850218 -0.526432 -0.982973 -0.183749 -0.982973 0.18375 -0.850217 0.526433 -0.602634 0.798018 -0.273663 0.961826 0.0922688 0.995734 0.445739 0.895163 0.739009 0.673695 0.932472 0.361241 1 -2.44921e-016' orientation='0 0 1 0 0 0 1 0' scale='1.2 1.2 1 1'></extrusion>
+            </shape>
+          </transform>
+        </transform>
+        <transform translation='-3000 0 0'>
+          <transform USE='Blades_2'></transform>
+          <transform USE='AOPT_Transform_72369776'></transform>
+        </transform>
+        <background groundAngle='0.9 1.5 1.57' groundColor='0.195918 0.609466 0.8 0.15124 0.466656 0.82 0.199041 0.138588 0.82 0.133937 0.332756 0.67' skyAngle='0.1 1.2 1.57' skyColor='0.149802 0.378623 0.8 0.101874 0.203117 0.7 0.184723 0.303895 0.7 0.337959 0.473671 0.69'></background>
+        <viewpoint description='Far View' position='0 0 10000'></viewpoint>
+        <transform>
+          <transform USE='Blades_2'></transform>
+          <transform USE='AOPT_Transform_72369776'></transform>
+        </transform>
+      </scene>
+    </x3d>
+  </body>
+</html>

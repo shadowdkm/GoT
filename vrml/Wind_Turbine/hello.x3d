@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- written by BS Contact 8.300 -->
+
+
+<X3D profile="Immersive" version="3.0">
+	<head></head>
+	<Scene>
+		<Transform>
+			<Shape>
+				<Appearance>
+					<Material>
+					</Material>
+					<ImageTexture url='"texture/20130822082738a7668.jpg"'>
+					</ImageTexture>
+				</Appearance>
+				<Sphere>
+				</Sphere>
+			</Shape>
+		</Transform>
+	</Scene>
+</X3D>

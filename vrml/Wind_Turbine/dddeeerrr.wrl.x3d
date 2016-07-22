@@ -123,47 +123,4 @@ DEF Deer_Armature_TRANSFORM Transform {
         }
     }
 }
-DEF sroot Transform {
-  translation 4.45 2 0.9
-  scale 1.27 1.25 0.66
-  children [
-    DEF sball561 Inline {
-      url "Deer.x3d" 
-    }
-    DEF sball878 Inline {
-      url "dddeeerrr0.wrl" 
-    }
-    DEF sball881 Inline {
-      url "dddeeerrr0.wrl" 
-    }
-    DEF sball616 Inline {
-      url "dddeeerrr0.wrl" 
-    }
-    DEF sball430 Inline {
-      url "dddeeerrr0.wrl" 
-    }
-    DEF sball955 Inline {
-      url "dddeeerrr0.wrl" 
-    }
-    DEF sball464 Inline {
-      url "dddeeerrr0.wrl" 
-    }
-    DEF sball455 Inline {
-      url "dddeeerrr0.wrl" 
-    }
-    DEF sball437 Inline {
-      url "dddeeerrr0.wrl" 
-    }
-    DEF sball858 Inline {
-      url "dddeeerrr0.wrl" 
-    }
-    DEF sball348 Inline {
-      url "dddeeerrr0.wrl" 
-    }
-    DEF sball434 Inline {
-      url "dddeeerrr0.wrl" 
-    }
-    ]
-
-}
 

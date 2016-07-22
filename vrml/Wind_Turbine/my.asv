@@ -1,10 +1,10 @@
 clear
 clc
-mp=vrworld('./testing.wrl');
+mp=vrworld('./dddeeerrr.wrl');
 open(mp);
 view(mp);
 
-mynode = vrnode(mp, 'sroot','Transform')
+mynode = vrnode(mp, 'sroot','Transform');
 mynode = vrnode(mp.sroot, 'children',['sball' num2str(randi(1000))],'Inline');
 mynode.url='hello.wrl';
 
@@ -16,3 +16,7 @@ pause(0.01)
 end
 
 save(mp,'addedball.wrl')
+save(mp,'addedball.x3d')
+
+close(mp)
+

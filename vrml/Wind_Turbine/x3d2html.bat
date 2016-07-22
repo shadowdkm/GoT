@@ -1,2 +1,2 @@
 cls
-C:\Program^ Files\Instant^ Reality\bin\aopt.exe -i .\addedball.wrl -N .\addedball.html -B
+C:\Program^ Files\VCG\MeshLab\meshlabserver.exe -i testing.wrl -o testing.x3d

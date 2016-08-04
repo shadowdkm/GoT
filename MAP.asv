@@ -162,14 +162,19 @@ classdef MAP < handle
             for i=1:6
                 bid=split4(obj.current_crowns(i));
                 obj.current_crowns(i)=obj.current_crowns(i)-sum(bid);
-                bids=[bids,bid];
-                
+                bids=[bids;bid];                
             end
             
             
-            obj.rank1=randperm(6);
-            obj.rank2=randperm(6);
-            obj.rank3=randperm(6);
+            [bid1,obj.rank1]=sort(bids(:,1),'descend');
+            [bid2,obj.rank2]=sort(bids(:,2),'descend');
+            [bid3,obj.rank3]=sort(bids(:,3),'descend');
+            
+            fprintf('\n1: '), for i=1:6,    fprintf('%s(%d) ',house_index2name(obj.rank1(i)),bid1(i)),  end
+            fprintf('\n2: '), for i=1:6,    fprintf('%s(%d) ',house_index2name(obj.rank2(i)),bid2(i)),  end
+            fprintf('\n3: '), for i=1:6,    fprintf('%s(%d) ',house_index2name(obj.rank3(i)),bid3(i)),  end
+            fprintf('\n');
+            
         end
         
         function valid_use=use_a_throne_token(obj,house_flag)
@@ -217,6 +222,34 @@ classdef MAP < handle
                         fprintf('*');
                     end
                     fprintf('] ');
+                end
+            end
+            
+            
+            
+            %             fprintf('\n*****************************')
+            fprintf('\n')
+        end
+        
+        function list_map_as_html(obj)
+            %             fprintf('\n*****************************')
+            troop_offset=[0,5,-5,10];
+            house
+            load locationArray
+            h3dfile=fopen('themap.html');
+            
+            for i=6:-1:1
+                for j=1:length(area_list2disp)
+                    fprintf('%d[',area_list2disp(j));
+                    for k=1:length(obj.map_areas(area_list2disp(j)).troops)
+                        fprintf('<Transform translation="%f %f 0">\n',locationArray(1,area_list2disp(j))-mapoffset(1),locationArray(2,area_list2disp(j))-mapoffset(2))
+                        fprintf('<Transform scale="20 20 20">\n')
+                        fprintf('<inline url="./models/%sp.x3d"> </inline> \n',)
+                        fprintf('</Transform>\n')
+                        fprintf('</Transform>\n')
+                        fprintf('%d',obj.map_areas(area_list2disp(j)).troops(k).type);
+                    end
+                   
                 end
             end
             

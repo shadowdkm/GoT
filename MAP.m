@@ -231,6 +231,33 @@ classdef MAP < handle
             fprintf('\n')
         end
         
+        function list_map_as_html(obj)
+            %             fprintf('\n*****************************')
+            troop_offset=[0,5,-5,10];
+            house_color='wkrbog';
+            load locationArray
+            h3dfile=fopen('./x3d/test/themap.html','w');
+            
+            for i=6:-1:1
+                area_list2disp=obj.areas_of_a_house(i);
+                for j=1:length(area_list2disp)
+                    for k=1:length(obj.map_areas(area_list2disp(j)).troops)
+                        fprintf(h3dfile,'<Transform translation="%f %f 0">\n',troop_offset(k)+locationArray(1,area_list2disp(j))-mapoffset(1),locationArray(2,area_list2disp(j))-mapoffset(2));
+                        fprintf(h3dfile,'<Transform scale="20 20 20">\n');
+                        fprintf(h3dfile,'<inline url="./models/%sp.x3d"> </inline> \n',house_color(i));
+                        fprintf(h3dfile,'</Transform>\n');
+                        fprintf(h3dfile,'</Transform>\n');
+                    end
+                   
+                end
+            end
+            fclose(h3dfile);
+            
+            
+            %             fprintf('\n*****************************')
+            fprintf('\n')
+        end
+        
         function rec_comb=recruit_combinations(obj, index)
             rec_comb=obj.map_areas(index).recruit_combinations(obj.map_areas, obj.current_barrels);
         end

@@ -1,0 +1,43 @@
+
+<html lang="en"> 
+<head>
+	<meta charset="utf-8"/>
+    <title>My first X3DOM page</title>
+    <script type='text/javascript' src='http://www.x3dom.org/download/1.7.1/x3dom.js'> </script>
+    <link rel='stylesheet' type='text/css' href='http://www.x3dom.org/download/1.7.1/x3dom.css'/>
+</head>
+<body>
+<h1>Using the Inline Node</h1>
+
+
+<p>
+    This example 
+</p>
+
+
+	
+	
+   <x3d width='1280px' height='600px'> 
+    <scene>
+		<Viewpoint id="front" position="0 -1100 2000" orientation="1 0 0 0.5" description="camera"></Viewpoint>
+		<Transform translation='0 0 -1'>
+			<Transform scale='1 1 1'>
+				<shape>
+					<appearance>
+						<ImageTexture  url="./models/texture/GoT.jpg"></ImageTexture>
+					</appearance>
+					<box size='2972 1488 1'></box>
+				</shape>
+			</Transform>
+		</Transform>
+
+
+
+
+
+
+    </scene> 
+    </x3d>  
+	
+</body>
+</html>

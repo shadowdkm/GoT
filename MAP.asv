@@ -190,15 +190,20 @@ classdef MAP < handle
             %             fprintf('\n*****************************')
             if nargin<2
                 fid=1;
+                newline=char(10);
+                
+            else
+                newline='<br />';
             end
-            fprintf(fid,'\n1: '), for i=1:6,    fprintf(fid,'%s ',house_index2name(obj.rank1(i))),  end
-            fprintf(fid,'\n2: '), for i=1:6,    fprintf(fid,'%s ',house_index2name(obj.rank2(i))),  end
-            fprintf(fid,'\n3: '), for i=1:6,    fprintf(fid,'%s ',house_index2name(obj.rank3(i))),  end
-            fprintf(fid,'\n');
+            
+            fprintf(fid,'%s1: ',newline); for i=1:6,    fprintf(fid,'%s ',house_index2name(obj.rank1(i)));  end
+            fprintf(fid,'%s2: ',newline); for i=1:6,    fprintf(fid,'%s ',house_index2name(obj.rank2(i)));  end
+            fprintf(fid,'%s3: ',newline); for i=1:6,    fprintf(fid,'%s ',house_index2name(obj.rank3(i)));  end
+            fprintf(fid,'%s',newline);
             for i=6:-1:1
-                fprintf(fid,'\n%s: %dB %dT %d.',house_index2name(i),obj.current_barrels(i),obj.castles_occupied(i),obj.current_crowns(i))
+                fprintf(fid,'%s%s: %dB %dT %d.',newline,house_index2name(i),obj.current_barrels(i),obj.castles_occupied(i),obj.current_crowns(i));
                 area_list2disp=obj.areas_of_a_house(i);
-                fprintf(fid,'\n');
+                fprintf(fid,'%s',newline);
                 for j=1:length(area_list2disp)
                     fprintf(fid,'%d[',area_list2disp(j));
                     for k=1:length(obj.map_areas(area_list2disp(j)).troops)
@@ -230,30 +235,66 @@ classdef MAP < handle
             
             
             %             fprintf('\n*****************************')
-            fprintf(fid,'\n')
+            fprintf(fid,'%s',newline);
         end
         
         function list_map_as_html(obj)
             %             fprintf('\n*****************************')
-            troop_offsetx=[0,30,15,15];
-            troop_offsety=[0,0,-20,20];
+            h3dhead = urlread('file:///C:/Users/user/Documents/GitHub/GoT/x3d/test/headtemplate.html');
+
+            
+            troop_offsetx=-[0,30,15,15]*2;
+            troop_offsety=[0,0,-28,28]*2;
             house_color='oygrkw';
             load locationArray
             h3dfile=fopen('./x3d/test/themap.html','w');
+            fprintf(h3dfile,'%s',h3dhead);
             %locationArray(2,:)=-locationArray(2,:);
             for i=6:-1:1
                 area_list2disp=obj.areas_of_a_house(i);
                 for j=1:length(area_list2disp)
                     for k=1:length(obj.map_areas(area_list2disp(j)).troops)
-                        fprintf(h3dfile,'<Transform translation="%f %f 0">\n',troop_offset(k)+locationArray(1,area_list2disp(j))-mapoffset(1),troop_offset(k)/2-(locationArray(2,area_list2disp(j))-mapoffset(2)));
-                        fprintf(h3dfile,'<Transform scale="10 10 10">\n');
-                        fprintf(h3dfile,'<inline url="./models/%sp.x3d"> </inline> \n',house_color(i));
-                        fprintf(h3dfile,'</Transform>\n');
+                        if obj.map_areas(area_list2disp(j)).troops(k).type==0
+                            fprintf(h3dfile,'<Transform translation="%f %f 0" rotation="0 0 1 0.5" scale="13 13 13">\n',troop_offsetx(k)/2+locationArray(1,area_list2disp(j))-mapoffset(1),troop_offsety(k)/2-(locationArray(2,area_list2disp(j))-mapoffset(2)));
+                            fprintf(h3dfile,'<inline url="models/%ss.x3d"> </inline> \n',house_color(i));
+                        elseif obj.map_areas(area_list2disp(j)).troops(k).type==1
+                            fprintf(h3dfile,'<Transform translation="%f %f 0" rotation="0 0 1 0.5" scale="13 13 13">\n',troop_offsetx(k)+locationArray(1,area_list2disp(j))-mapoffset(1),troop_offsety(k)/2-(locationArray(2,area_list2disp(j))-mapoffset(2)));
+                            fprintf(h3dfile,'<inline url="models/%sp.x3d"> </inline> \n',house_color(i));
+                        elseif obj.map_areas(area_list2disp(j)).troops(k).type==2
+                            fprintf(h3dfile,'<Transform translation="%f %f 0" rotation="0 0 1 0.5" scale="15 15 15">\n',troop_offsetx(k)+locationArray(1,area_list2disp(j))-mapoffset(1),troop_offsety(k)/2-(locationArray(2,area_list2disp(j))-mapoffset(2)));
+                            fprintf(h3dfile,'<inline url="models/%sk.x3d"> </inline> \n',house_color(i));
+                        elseif obj.map_areas(area_list2disp(j)).troops(k).type==3
+                            fprintf(h3dfile,'<Transform translation="%f %f 0" rotation="0 0 1 0.5" scale="15 15 15">\n',troop_offsetx(k)+locationArray(1,area_list2disp(j))-mapoffset(1),troop_offsety(k)/2-(locationArray(2,area_list2disp(j))-mapoffset(2)));
+                            fprintf(h3dfile,'<inline url="models/%se.x3d"> </inline> \n',house_color(i));
+                        end
                         fprintf(h3dfile,'</Transform>\n');
                     end
                    
+                    if obj.map_areas(area_list2disp(j)).throne_token>0
+                        fprintf(h3dfile,'<Transform translation="%f %f 0" rotation="0 0 1 0.5" scale="13 13 13">\n',-15+locationArray(1,area_list2disp(j))-mapoffset(1),15-(locationArray(2,area_list2disp(j))-mapoffset(2)));
+                        fprintf(h3dfile,'<inline url="models/%st.x3d"> </inline> \n',house_color(i));
+                        fprintf(h3dfile,'</Transform>\n');
+                    end
+                    
                 end
             end
+            
+            if obj.map_areas(28).throne_token>0
+                        fprintf(h3dfile,'<Transform translation="%f %f 0" rotation="0 0 1 0.5" scale="13 13 13">\n',-15+locationArray(1,area_list2disp(j))-mapoffset(1),15-(locationArray(2,area_list2disp(j))-mapoffset(2)));
+                        fprintf(h3dfile,'<inline url="models/%st.x3d"> </inline> \n',house_color(i));
+                        fprintf(h3dfile,'</Transform>\n');
+            end
+                    
+            if obj.map_areas(area_list2disp(j)).throne_token>0
+                        fprintf(h3dfile,'<Transform translation="%f %f 0" rotation="0 0 1 0.5" scale="13 13 13">\n',-15+locationArray(1,area_list2disp(j))-mapoffset(1),15-(locationArray(2,area_list2disp(j))-mapoffset(2)));
+                        fprintf(h3dfile,'<inline url="models/%st.x3d"> </inline> \n',house_color(i));
+                        fprintf(h3dfile,'</Transform>\n');
+            end
+            
+            fprintf(h3dfile,'\n</scene></x3d>\n');
+            fprintf(h3dfile,'<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p>&nbsp;</p><p>');
+            obj.list_map_as_text(h3dfile);
+            fprintf(h3dfile,'\n</p><p><img src="connections.png" width="1280" height="600" ></p></body></html>');
             fclose(h3dfile);
             
             

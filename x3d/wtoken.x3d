@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.1//EN" "http://www.web3d.org/specifications/x3d-3.1.dtd">
+<X3D version="3.1" xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" profile="Immersive" xsd:noNamespaceSchemaLocation="http://www.web3d.org/specifications/x3d-3.1.xsd">
+ <head>
+  <meta name="title" content="wtoken.x3d"/>
+  <meta name="description" content="Generated from Meshlab X3D Exported"/>
+  <meta name="created" content="9 August 2016"/>
+  <meta name="generator" content="Meshlab X3D Exported, http://meshlab.sourceforge.net"/>
+ </head>
+ <Scene>
+  <Shape>
+   <IndexedFaceSet solid="false" coordIndex="0 0 1 -1 2 1 3 -1 4 3 5 -1 0 0 6 -1 1 6 7 -1 3 7 5 -1 0 0 8 -1 6 8 9 -1 7 9 5 -1 0 0 10 -1 8 10 11 -1 9 11 5 -1 0 0 2 -1 10 2 4 -1 11 4 5 -1 2 0 1 -1 4 2 3 -1 5 4 5 -1 1 0 6 -1 3 1 7 -1 5 3 5 -1 6 0 8 -1 7 6 9 -1 5 7 5 -1 8 0 10 -1 9 8 11 -1 5 9 5 -1 10 0 2 -1 11 10 4 -1 5 11 5 -1">
+    <Coordinate point="0 0 1 2 -1.5 1 2 2 1 2 -1.5 0 2 2 0 0 0 0 0 -2.5 1 0 -2.5 0 -2 -1.5 1 -2 -1.5 0 -2 2 1 -2 2 0"/>
+    <ColorRGBA color="1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1"/>
+    <Normal vector="0 0 1.4289 2.27328 -1.40496 2.03444 1.5708 0 0.785398 2.27328 -1.40496 -2.03444 1.5708 0 -0.785398 0 0 -1.4289 -5.96046e-08 -2.80993 2.2143 0 -2.80993 -2.2143 -2.27328 -1.40496 2.03444 -2.27328 -1.40496 -2.03444 -1.5708 1.5708 1.5708 -1.5708 1.5708 -1.5708"/>
+   </IndexedFaceSet>
+  </Shape>
+ </Scene>
+</X3D>

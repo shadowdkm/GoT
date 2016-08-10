@@ -271,7 +271,7 @@ classdef MAP < handle
                     end
                    
                     if obj.map_areas(area_list2disp(j)).throne_token>0
-                        fprintf(h3dfile,'<Transform translation="%f %f 0" rotation="0 0 1 0.5" scale="13 13 13">\n',-15+locationArray(1,area_list2disp(j))-mapoffset(1),15-(locationArray(2,area_list2disp(j))-mapoffset(2)));
+                        fprintf(h3dfile,'<Transform translation="%f %f 0" rotation="0 0 1 0.5" scale="20 20 20">\n',-15+locationArray(1,area_list2disp(j))-mapoffset(1),15-(locationArray(2,area_list2disp(j))-mapoffset(2)));
                         fprintf(h3dfile,'<inline url="models/%st.x3d"> </inline> \n',house_color(i));
                         fprintf(h3dfile,'</Transform>\n');
                     end
@@ -280,21 +280,21 @@ classdef MAP < handle
             end
             
             if obj.map_areas(28).defence==5
-                        fprintf(h3dfile,'<Transform translation="%f %f 0" rotation="0 0 1 0.5" scale="20 20 20">\n',-15+locationArray(1,28)-mapoffset(1),15-(locationArray(2,28)-mapoffset(2)));
+                        fprintf(h3dfile,'<Transform translation="%f %f 0" rotation="0 0 1 0.5" scale="25 25 25">\n',-15+locationArray(1,28)-mapoffset(1),15-(locationArray(2,28)-mapoffset(2)));
                         fprintf(h3dfile,'<inline url="models/5t.x3d"> </inline> \n');
                         fprintf(h3dfile,'</Transform>\n');
             end
                     
             if obj.map_areas(34).defence==6
-                        fprintf(h3dfile,'<Transform translation="%f %f 0" rotation="0 0 1 0.5" scale="20 20 20">\n',-15+locationArray(1,34)-mapoffset(1),15-(locationArray(2,34)-mapoffset(2)));
+                        fprintf(h3dfile,'<Transform translation="%f %f 0" rotation="0 0 1 0.5" scale="25 25 25">\n',-15+locationArray(1,34)-mapoffset(1),15-(locationArray(2,34)-mapoffset(2)));
                         fprintf(h3dfile,'<inline url="models/6t.x3d"> </inline> \n');
                         fprintf(h3dfile,'</Transform>\n');
             end
             
             fprintf(h3dfile,'\n</scene></x3d>\n');
-            fprintf(h3dfile,'<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p>&nbsp;</p><p>');
+            fprintf(h3dfile,'\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p>\n');
             obj.list_map_as_text(h3dfile);
-            fprintf(h3dfile,'\n</p><p><img src="connections.png" width="1280" height="600" ></p></body></html>');
+            fprintf(h3dfile,'\n</p>\n</body>\n</html>');
             fclose(h3dfile);
             
             

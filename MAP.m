@@ -196,10 +196,19 @@ classdef MAP < handle
                 newline='<br />';
             end
             
-            fprintf(fid,'%s1: ',newline); for i=1:6,    fprintf(fid,'%s ',house_index2name(obj.rank1(i)));  end
-            fprintf(fid,'%s2: ',newline); for i=1:6,    fprintf(fid,'%s ',house_index2name(obj.rank2(i)));  end
-            fprintf(fid,'%s3: ',newline); for i=1:6,    fprintf(fid,'%s ',house_index2name(obj.rank3(i)));  end
-            fprintf(fid,'%s',newline);
+            if nargin<2
+                fprintf(fid,'%s1: ',newline); for i=1:6,    fprintf(fid,'%s ',house_index2name(obj.rank1(i)));  end
+                fprintf(fid,'%s2: ',newline); for i=1:6,    fprintf(fid,'%s ',house_index2name(obj.rank2(i)));  end
+                fprintf(fid,'%s3: ',newline); for i=1:6,    fprintf(fid,'%s ',house_index2name(obj.rank3(i)));  end
+                fprintf(fid,'%s',newline);
+            else
+                fprintf(fid,'%s&#9819: ',newline); for i=1:6,    fprintf(fid,'%s ',house_index2name(obj.rank1(i)));  end
+                fprintf(fid,'%s&#9876: ',newline); for i=1:6,    fprintf(fid,'%s ',house_index2name(obj.rank2(i)));  end
+                fprintf(fid,'%s&#128038: ',newline); for i=1:6,    fprintf(fid,'%s ',house_index2name(obj.rank3(i)));  end
+                fprintf(fid,'%s',newline);    
+                return;
+            end
+            
             for i=6:-1:1
                 fprintf(fid,'%s%s: %dB %dT %d.',newline,house_index2name(i),obj.current_barrels(i),obj.castles_occupied(i),obj.current_crowns(i));
                 area_list2disp=obj.areas_of_a_house(i);
@@ -238,9 +247,12 @@ classdef MAP < handle
             fprintf(fid,'%s',newline);
         end
         
-        function list_map_as_html(obj)
+        function list_map_as_html(obj,map_count)
             %             fprintf('\n*****************************')
-            h3dhead = urlread('file:///C:/Users/user/Documents/GitHub/GoT/x3d/test/headtemplate.html');
+            if nargin<2
+                map_count=1;
+            end
+            h3dhead = urlread('file:///C:/Users/user/Documents/GitHub/GoT/x3d/test/headtemplateaug16.html');
 
             
             troop_offsetx=-[0,30,15,15]*2;
@@ -294,7 +306,15 @@ classdef MAP < handle
             fprintf(h3dfile,'\n</scene></x3d>\n');
             fprintf(h3dfile,'\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p>\n');
             obj.list_map_as_text(h3dfile);
-            fprintf(h3dfile,'\n</p>\n</body>\n</html>');
+            
+            fprintf(h3dfile,'\n<script type="text/javascript">var submitted=false;</script>');
+            fprintf(h3dfile,'\n<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) {window.location=''map_v01_%03d.html'';}"></iframe>',map_count+1);
+            fprintf(h3dfile,'\n<form action="https://docs.google.com/forms/d/e/1FAIpQLSdszEMkab8jbzken1gc-qWysPUBPdll074uW4P6JAtktao4lA/formResponse" method="post" target="hidden_iframe" onsubmit="submitted=true;">');
+            fprintf(h3dfile,'\n<input type="hidden" name="entry.2117498131" value="%d">',map_count);
+            
+            
+            h3dfoot = urlread('file:///C:/Users/user/Documents/GitHub/GoT/x3d/test/foottemplateaug16.html');
+            fprintf(h3dfile,'%s',h3dfoot);
             fclose(h3dfile);
             
             

@@ -9,4 +9,4 @@ while(~sum(m.castles_occupied>6)&&round<=6)
     round=round+1;
 end
 
-m.list_map_as_html;
+m.list_map_as_html(map_indexs);

@@ -1,0 +1,405 @@
+
+1: Brt Stk Drn Grj Lts Tyr 
+2: Tyr Brt Lts Stk Grj Drn 
+3: Lts Tyr Drn Brt Grj Stk 
+
+Stk: 1B 2T 5.
+12[0] 46[1] 47[12] 
+Grj: 1B 1T 5.
+2[0] 41[12] 43[1] 51[0] 
+Lts: 1B 1T 5.
+3[0] 32[1] 37[12] 
+Tyr: 1B 1T 5.
+5[0] 21[1] 27[12] 
+Brt: 1B 1T 5.
+10[00] 23[12] 25[1] 
+Drn: 1B 1T 5.
+8[0] 13[12] 14[1] 
+
+1: Brt Stk Drn Grj Lts Tyr 
+2: Tyr Brt Lts Stk Grj Drn 
+3: Lts Tyr Drn Brt Grj Stk 
+
+Stk: 1B 2T 5.
+12[0(P] 46[1(P] 47[12(=*] 
+Grj: 1B 1T 5.
+2[0(=*] 41[12(T*] 43[1(P] 51[0(P] 
+Lts: 1B 1T 5.
+3[0(=] 32[1(P] 37[12(P] 
+Tyr: 1B 1T 5.
+5[0(=] 21[1(P] 27[12(P] 
+Brt: 1B 1T 5.
+10[00(=] 23[12(P] 25[1(P] 
+Drn: 1B 1T 5.
+8[0(P] 13[12(=] 14[1(P] 
+
+Brt Area 23:[FtmKnt 23->25]
+A throne token put in Area 23
+Brt Area 25:[Ftm 25->20][Knt 25->23][Ftm 25->26]
+A throne token put in Area 25
+Stk Area 12:[Shp 12->12]
+Stk Area 46:[Ftm 46->42]
+A throne token put in Area 46
+Drn Area 8:[Shp 8->6]
+Drn Area 14:[Ftm 14->14]
+Grj Area 43:[Ftm 43->43]
+Grj Area 51:[Shp 51->2]
+Lts Area 32:[Ftm 32->37]
+A throne token put in Area 32
+Lts Area 37:[FtmKntFtm 37->32]
+A throne token put in Area 37
+Tyr Area 21:[Ftm 21->17]
+A throne token put in Area 21
+Tyr Area 27:[FtmKnt 27->19]
+A throne token put in Area 27
++ a Stk shp @ Area1
++ a Stk shp @ Area58
+roll =
+
+     2
+
+
+[A Lts Ftm cut from 32]
+1: Brt Stk Drn Grj Lts Tyr 
+2: Tyr Brt Lts Stk Grj Drn 
+3: Lts Tyr Drn Brt Grj Stk 
+
+Stk: 1B 3T 4.
+1[0] 12[0] 42[1] 46[#] 47[12*] 58[0] 
+Grj: 2B 1T 5.
+2[00*] 41[12*] 43[1] 
+Lts: 0B 1T 4.
+3[0] 32[21#] 37[#] 
+Tyr: 3B 1T 4.
+5[0] 17[1] 19[12] 21[#] 27[#] 
+Brt: 2B 2T 4.
+10[00] 20[1] 23[2#] 25[#] 26[1] 
+Drn: 2B 1T 7.
+6[0] 13[12] 14[1] 
+
+-- R 1 --
+
+1: Brt Stk Drn Grj Lts Tyr 
+2: Tyr Brt Lts Stk Grj Drn 
+3: Lts Tyr Drn Brt Grj Stk 
+
+Stk: 1B 3T 4.
+1[0(T*] 12[0(T] 42[1(=] 46[#] 47[12(P] 58[0(P] 
+Grj: 2B 1T 5.
+2[00(P*] 41[12(P] 43[1(P] 
+Lts: 0B 1T 4.
+3[0(P] 32[21#(P] 37[#] 
+Tyr: 3B 1T 4.
+5[0(P] 17[1(=] 19[12(P] 21[#] 27[#] 
+Brt: 2B 2T 4.
+10[00(T*] 20[1(P] 23[2#(P] 25[#] 26[1(=] 
+Drn: 2B 1T 7.
+6[0(P*] 13[12(P] 14[1(P] 
+
+Brt Area 20:[Ftm 20->24]
+A throne token put in Area 20
+Brt Area 23:[Knt 23->25]
+Stk Area 47:[FtmKnt 47->50]
+A throne token put in Area 47
+Stk Area 58:[Shp 58->1]
+Drn Area 6:[Shp 6->6]
+Drn Area 13:[FtmKnt 13->14]
+A throne token put in Area 13
+Drn Area 14:[Ftm 14->13][Knt 14->14][Ftm 14->15]
+Grj Area 2:[Shp 2->2][Shp 2->4]
+Grj Area 41:[FtmKnt 41->43]
+A throne token put in Area 41
+Grj Area 43:[Ftm 43->33][FtmKnt 43->41]
+A throne token put in Area 43
+Lts Area 3:[Shp 3->52]
+Lts Area 32:[Knt 32->36][Ftm 32->37]
+Tyr Area 5:[Shp 5->5]
+Tyr Area 19:[Ftm 19->18][Knt 19->19]
+roll =
+
+     1
+
+
+1: Brt Stk Drn Grj Lts Tyr 
+2: Tyr Brt Lts Stk Grj Drn 
+3: Lts Tyr Drn Brt Grj Stk 
+
+Stk: 1B 3T 4.
+1[00*] 12[0] 42[1] 46[#] 47[#] 50[12] 
+Grj: 2B 1T 3.
+2[0*] 4[0] 33[1] 41[12#] 43[#] 
+Lts: 0B 2T 4.
+32[#] 36[2] 37[1#] 52[0] 
+Tyr: 3B 1T 6.
+5[0] 17[1] 18[1] 19[2] 21[#] 27[#] 
+Brt: 2B 3T 4.
+10[00*] 20[#] 23[#] 24[1] 25[2#] 26[1] 
+Drn: 2B 2T 6.
+6[0*] 13[1#] 14[2] 15[1] 
+
+-- R 2 --
+
+1: Brt Stk Drn Grj Lts Tyr 
+2: Tyr Brt Lts Stk Grj Drn 
+3: Lts Tyr Drn Brt Grj Stk 
+
+Stk: 1B 3T 4.
+1[00(P] 12[0(=] 42[1(P*] 46[#] 47[#] 50[12(P] 
+Grj: 2B 1T 3.
+2[0(=] 4[0(P] 33[1(P] 41[12#(T*] 43[#] 
+Lts: 0B 2T 4.
+32[#] 36[2(=] 37[1#(P] 52[0(P] 
+Tyr: 3B 1T 6.
+5[0(P] 17[1(P] 18[1(=] 19[2(T] 21[#] 27[#] 
+Brt: 2B 3T 4.
+10[00(T] 20[#] 23[#] 24[1(P] 25[2#(=] 26[1(P] 
+Drn: 2B 2T 6.
+6[0(P*] 13[1#(=*] 14[2(P] 15[1(P] 
+
+Brt Area 24:[Ftm 24->23]
+A throne token put in Area 24
+Brt Area 26:[Ftm 26->25]
+A throne token put in Area 26
+Stk Area 1:[ShpShp 1->58]
+Stk Area 42:[Ftm 42->46]
+A throne token put in Area 42
+Stk Area 50:[Knt 50->45][Ftm 50->46]
+A throne token put in Area 50
+Drn Area 6:[Shp 6->6]
+Drn Area 14:[Knt 14->15]
+A throne token put in Area 14
+Drn Area 15:[Ftm 15->15][Knt 15->13]
+Grj Area 4:[Shp 4->4]
+Grj Area 33:[Ftm 33->43]
+A throne token put in Area 33
+Lts Area 52:[Shp 52->3]
+Tyr Area 5:[Shp 5->53]
+Tyr Area 17:[Ftm 17->17]
+^ a Drn ftm 2 sgn @ Area13
++ a Drn shp @ Area7
+roll =
+
+     2
+
+
+1: Brt Stk Drn Grj Lts Tyr 
+2: Tyr Brt Lts Stk Grj Drn 
+3: Lts Tyr Drn Brt Grj Stk 
+
+Stk: 2B 3T 3.
+12[0] 42[#*] 45[2] 46[11#] 47[#] 50[#] 58[00] 
+Grj: 3B 1T 3.
+2[0] 4[0] 33[#] 41[12#*] 43[1#] 
+Lts: 1B 2T 6.
+3[0] 32[#] 36[2] 37[1#] 
+Tyr: 4B 1T 7.
+17[1] 18[1] 19[2] 21[#] 27[#] 53[0] 
+Brt: 2B 3T 3.
+10[00] 20[#] 23[1#] 24[#] 25[21#] 26[#] 
+Drn: 2B 2T 5.
+6[0*] 7[0] 13[23#*] 14[#] 15[1] 
+
+-- R 3 --
+
+1: Brt Stk Drn Grj Lts Tyr 
+2: Tyr Brt Lts Stk Grj Drn 
+3: Lts Tyr Drn Brt Grj Stk 
+
+Stk: 2B 3T 3.
+12[0(=*] 42[#*] 45[2(P] 46[11#(P] 47[#] 50[#] 58[00(P*] 
+Grj: 3B 1T 3.
+2[0(=*] 4[0(P] 33[#] 41[12#(P*] 43[1#(P] 
+Lts: 1B 2T 6.
+3[0(=] 32[#] 36[2(P] 37[1#(P] 
+Tyr: 4B 1T 7.
+17[1(T] 18[1(=] 19[2(P] 21[#] 27[#] 53[0(P] 
+Brt: 2B 3T 3.
+10[00(=] 20[#] 23[1#(P] 24[#] 25[21#(P] 26[#] 
+Drn: 2B 2T 5.
+6[0(P] 7[0(=*] 13[23#(P*] 14[#] 15[1(P] 
+
+Brt Area 25:[KntFtm 25->25]
+Stk Area 45:[Knt 45->47]
+A throne token put in Area 45
+Stk Area 46:[Ftm 46->42][Ftm 46->50]
+Stk Area 58:[ShpShp 58->1]
+Drn Area 6:[Shp 6->6]
+Drn Area 13:[KntSgn 13->15]
+Drn Area 15:[Knt 15->14][Sgn 15->15][Ftm 15->20]
+A throne token in Area 20 in removed
+Grj Area 4:[Shp 4->2]
+Grj Area 41:[FtmKnt 41->40]
+Grj Area 43:[Ftm 43->40]
+Lts Area 36:[Knt 36->33]
+A throne token in Area 33 in removed
+A throne token put in Area 36
+Tyr Area 19:[Knt 19->19]
+Tyr Area 53:[Shp 53->5]
+roll =
+
+     3
+
+
+1: Tyr Grj Brt Drn Stk Lts 
+2: Lts Tyr Stk Drn Grj Brt 
+3: Stk Drn Grj Lts Brt Tyr 
+
+Stk: 2B 3T 2.
+1[00] 12[0*] 42[1#*] 45[#] 46[#] 47[2#] 50[1#] 
+Grj: 3B 2T 3.
+2[00*] 40[121] 41[#*] 43[#] 
+Lts: 1B 2T 6.
+3[0] 32[#] 33[2] 36[#] 37[1#] 
+Tyr: 4B 1T 8.
+5[0] 17[1] 18[1] 19[2] 21[#] 27[#] 
+Brt: 2B 3T 4.
+10[00] 23[1#] 24[#] 25[21#] 26[#] 
+Drn: 2B 2T 5.
+6[0] 7[0*] 13[#*] 14[2#] 15[3] 20[1] 
+
+-- R 4 --
+
+1: Tyr Grj Brt Drn Stk Lts 
+2: Lts Tyr Stk Drn Grj Brt 
+3: Stk Drn Grj Lts Brt Tyr 
+
+Stk: 2B 3T 2.
+1[00(T*] 12[0(P] 42[1#(P] 45[#] 46[#] 47[2#(P*] 50[1#(=*] 
+Grj: 3B 2T 3.
+2[00(P*] 40[121(P] 41[#*] 43[#] 
+Lts: 1B 2T 6.
+3[0(P] 32[#] 33[2(P] 36[#] 37[1#(P*] 
+Tyr: 4B 1T 8.
+5[0(=] 17[1(P] 18[1(P] 19[2(T] 21[#] 27[#] 
+Brt: 2B 3T 4.
+10[00(=] 23[1#(P] 24[#] 25[21#(P] 26[#] 
+Drn: 2B 2T 5.
+6[0(T] 7[0(=*] 13[#*] 14[2#(T] 15[3(P] 20[1(P] 
+
+Tyr Area 17:[Ftm 17->17]
+Tyr Area 18:[Ftm 18->27]
+A throne token put in Area 18
+Grj Area 2:[Shp 2->51][Shp 2->2]
+Grj Area 40:[Knt 40->40][Ftm 40->41][Ftm 40->44]
+Brt Area 25:[Knt 25->30][Ftm 25->26]
+Drn Area 15:[Sgn 15->13]
+A throne token put in Area 15
+Drn Area 20:[Ftm 20->15]
+A throne token put in Area 20
+Stk Area 12:[Shp 12->12]
+Stk Area 42:[Ftm 42->46]
+Stk Area 47:[Knt 47->46]
+Lts Area 3:[Shp 3->3]
+Lts Area 33:[Knt 33->29]
+A throne token put in Area 33
+roll =
+
+     5
+
+
+Collect Thrones Event
+
+1: Tyr Grj Brt Drn Stk Lts 
+2: Lts Tyr Stk Drn Grj Brt 
+3: Stk Drn Grj Lts Brt Tyr 
+
+Stk: 2B 3T 4.
+1[00*] 12[0] 42[#] 45[#] 46[12#] 47[#*] 50[1#*] 
+Grj: 3B 3T 5.
+2[0*] 40[2] 41[1#*] 43[#] 44[1] 51[0] 
+Lts: 1B 2T 9.
+3[0] 29[2] 32[#] 33[#] 36[#] 37[1#*] 
+Tyr: 4B 1T 11.
+5[0] 17[1] 18[#] 19[2] 21[#] 27[1#] 
+Brt: 2B 4T 6.
+10[00] 23[1#] 24[#] 25[#] 26[1#] 30[2] 
+Drn: 2B 2T 5.
+6[0] 7[0*] 13[3#*] 14[2#] 15[1#] 20[#] 
+
+-- R 5 --
+
+1: Tyr Grj Brt Drn Stk Lts 
+2: Lts Tyr Stk Drn Grj Brt 
+3: Stk Drn Grj Lts Brt Tyr 
+
+Stk: 2B 3T 4.
+1[00(P] 12[0(=*] 42[#] 45[#] 46[12#(P] 47[#*] 50[1#(T] 
+Grj: 3B 3T 5.
+2[0(P] 40[2(=*] 41[1#(T] 43[#] 44[1(P*] 51[0(P] 
+Lts: 1B 2T 9.
+3[0(=] 29[2(P] 32[#] 33[#] 36[#] 37[1#(P] 
+Tyr: 4B 1T 11.
+5[0(P] 17[1(P] 18[#] 19[2(T] 21[#] 27[1#(=] 
+Brt: 2B 4T 6.
+10[00(=] 23[1#(P] 24[#] 25[#] 26[1#(T] 30[2(P] 
+Drn: 2B 2T 5.
+6[0(P*] 7[0(=] 13[3#(P] 14[2#(P] 15[1#(T] 20[#] 
+
+Tyr Area 5:[Shp 5->53]
+Tyr Area 17:[Ftm 17->16]
+A throne token put in Area 17
+Grj Area 2:[Shp 2->4]
+Grj Area 44:[Ftm 44->43]
+A throne token put in Area 44
+Grj Area 51:[Shp 51->2]
+Brt Area 30:[Knt 30->28]
+A throne token put in Area 30
+Drn Area 6:[Shp 6->8]
+Drn Area 13:[Sgn 13->13]
+Drn Area 14:[Knt 14->13]
+Stk Area 1:[ShpShp 1->58]
+Stk Area 46:[Ftm 46->50][Knt 46->45]
+Lts Area 29:[Knt 29->33]
+A throne token put in Area 29
++ a Grj ftm @ Area40
++ a Grj shp @ Area2
+roll =
+
+     4
+
+
+Recruit Event
+
++ a Brt shp @ Area56
+^ a Brt ftm 2 knt @ Area23
+^ a Drn ftm 2 knt @ Area15
+^ a Tyr ftm 2 sgn @ Area16
++ a Brt ftm @ Area30
++ a Brt shp @ Area10
++ a Stk ftm @ Area47
+^ a Stk ftm 2 knt @ Area47
++ a Stk ftm @ Area42
+^ a Tyr ftm 2 sgn @ Area27
++ a Tyr ftm @ Area27
++ a Grj shp @ Area2
++ a Grj ftm @ Area41
+^ a Grj ftm 2 knt @ Area41
++ a Stk shp @ Area57
++ a Lts shp @ Area52
++ a Lts shp @ Area3
++ a Drn shp @ Area54
++ a Drn shp @ Area7
++ a Lts shp @ Area3
++ a Lts ftm @ Area36
+^ a Grj ftm 2 sgn @ Area40
+^ a Brt ftm 2 sgn @ Area26
++ a Brt ftm @ Area28
+^ a Brt ftm 2 sgn @ Area28
+1: Tyr Grj Brt Drn Stk Lts 
+2: Lts Tyr Stk Drn Grj Brt 
+3: Stk Drn Grj Lts Brt Tyr 
+
+Stk: 2B 3T 4.
+12[0*] 42[1#] 45[2#] 46[#] 47[2#*] 50[11#] 57[0] 58[00*] 
+Grj: 3B 3T 4.
+2[000] 4[0] 40[23*] 41[12#] 43[1#] 44[#*] 
+Lts: 1B 2T 9.
+3[000] 29[#] 32[#] 33[2#] 36[1#] 37[1#] 52[0] 
+Tyr: 4B 2T 11.
+16[3] 17[#] 18[#] 19[2] 21[#] 27[31#] 53[0] 
+Brt: 2B 5T 6.
+10[000] 23[2#] 24[#] 25[#] 26[3#] 28[23] 30[1#] 56[0] 
+Drn: 2B 2T 6.
+7[00] 8[0] 13[32#] 14[#] 15[2#] 20[#] 54[0] 
+
+-- R 6 --

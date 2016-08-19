@@ -13,6 +13,4 @@ function arrangements=arrange_targets(troop_number,target_array)
     else
          arrangements=[];
     end
-
-
 end

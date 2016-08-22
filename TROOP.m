@@ -1,5 +1,5 @@
 classdef TROOP < handle
-    properties (GetAccess=public, SetAccess=private)
+    properties (GetAccess=public, SetAccess=public)
       type=0;
       active=1;
       house_flag=0;

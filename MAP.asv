@@ -19,7 +19,8 @@ classdef MAP < handle
                         obj.rank2=randperm(6);
                         obj.rank3=randperm(6);
             for i=1:size(areaconns,1)
-                obj.map_areas=[obj.map_areas,AREA(i, areatype(i), map_resourses(i,5), map_resourses(i,3), map_resourses(i,2), map_resourses(i,4))];
+                obj.map_areas=[obj.map_areas,...
+                    AREA(i, areatype(i), map_resourses(i,5), map_resourses(i,3), map_resourses(i,2), map_resourses(i,4))];
                 
             end
             for i=1:6
@@ -207,14 +208,14 @@ classdef MAP < handle
                 fprintf(fid,'%s&#128038: ',newline); for i=1:6,    fprintf(fid,'%s ',house_index2name(obj.rank3(i)));  end
                 fprintf(fid,'%s',newline);  
 
-				fprintf(fid,'\n<table cellspacing="15" cellpadding="2" width="1200px" height="100px"><tbody>');
+				fprintf(fid,'\n<h3><table cellspacing="15" cellpadding="2" width="1200px" height="100px"><tbody>');
 				fprintf(fid,'\n<tr><td style="background-color: #CEF6CE;" width="400px">%s: %d Castles<br/>%s<br/>%d Barrels:',house_index2name(3),obj.castles_occupied(3),repmat('&#9819',1,obj.current_crowns(3)),obj.current_barrels(3));fprintf(fid,'%d',supply2(obj.current_barrels(3)));
 				fprintf(fid,'\n</td><td style="background-color: #F6CECE;" width="400px">%s: %d Castles<br/>%s<br/>%d Barrels:',house_index2name(4),obj.castles_occupied(4),repmat('&#9819',1,obj.current_crowns(4)),obj.current_barrels(4));fprintf(fid,'%d',supply2(obj.current_barrels(4)));
 				fprintf(fid,'\n</td><td style="background-color: #848484;" width="400px">%s: %d Castles<br/>%s<br/>%d Barrels:',house_index2name(5),obj.castles_occupied(5),repmat('&#9819',1,obj.current_crowns(5)),obj.current_barrels(5));fprintf(fid,'%d',supply2(obj.current_barrels(5)));
-				fprintf(fid,'\n</td></tr><tr><td style="background-color: #F6E3CE;" width="400px">%s: %d Castles<br/>%s<br/>%d Barrels:',house_index2name(6),obj.castles_occupied(6),repmat('&#9819',1,obj.current_crowns(6)),obj.current_barrels(6));fprintf(fid,'%d',supply2(obj.current_barrels(6)));
+				fprintf(fid,'\n</td></tr><tr><td style="background-color: #F6E3CE;" width="400px">%s: %d Castles<br/>%s<br/>%d Barrels:',house_index2name(1),obj.castles_occupied(1),repmat('&#9819',1,obj.current_crowns(1)),obj.current_barrels(1));fprintf(fid,'%d',supply2(obj.current_barrels(1)));
 				fprintf(fid,'\n</td><td style="background-color: #F5F6CE;" width="400px">%s: %d Castles<br/>%s<br/>%d Barrels:',house_index2name(2),obj.castles_occupied(2),repmat('&#9819',1,obj.current_crowns(2)),obj.current_barrels(2));fprintf(fid,'%d',supply2(obj.current_barrels(2)));
-				fprintf(fid,'\n</td><td style="background-color: #E6E6E6;" width="400px">%s: %d Castles<br/>%s<br/>%d Barrels:',house_index2name(1),obj.castles_occupied(1),repmat('&#9819',1,obj.current_crowns(1)),obj.current_barrels(1));fprintf(fid,'%d',supply2(obj.current_barrels(1)));
-				fprintf(fid,'\n</td></tr></tbody></table>');
+				fprintf(fid,'\n</td><td style="background-color: #E6E6E6;" width="400px">%s: %d Castles<br/>%s<br/>%d Barrels:',house_index2name(6),obj.castles_occupied(6),repmat('&#9819',1,obj.current_crowns(6)),obj.current_barrels(6));fprintf(fid,'%d',supply2(obj.current_barrels(6)));
+				fprintf(fid,'\n</td></tr></tbody></table></h3>');
                 return;
             end
             
@@ -256,8 +257,11 @@ classdef MAP < handle
             fprintf(fid,'%s',newline);
         end
         
-        function list_map_as_html(obj,map_count)
+        function list_map_as_html(obj,map_count,map_history)
             %             fprintf('\n*****************************')
+            if nargin<3
+                map_history=[];
+            end
             if nargin<2
                 map_count=1;
             end
@@ -313,30 +317,29 @@ classdef MAP < handle
             end
             
             fprintf(h3dfile,'\n</scene></x3d>\n');
+            fprintf(h3dfile,'\n&nbsp;<br/><br/><br/><h3>Ranking<h3>Rank</h3>\n');
             obj.list_map_as_text(h3dfile);
             fprintf(h3dfile,'\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n');
             
             %history of the map
             newline = sprintf('\n');
-            map_history = urlread('file:///C:/Users/user/Documents/GitHub/GoT/testing_dairy.txt');
             map_history=strrep(map_history,newline,'<br/>');
             
             fprintf(h3dfile,'\n<div class="container">');
-            fprintf(h3dfile,'\n<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">Simple collapsible</button>');
+            fprintf(h3dfile,'\n<button type="button" data-toggle="collapse" data-target="#demo">Map History</button>');
             fprintf(h3dfile,'\n<div id="demo" class="collapse">');
-            fprintf(h3dfile,'\n<div data-role="main" class="ui-content">');
-            fprintf(h3dfile,'\n    <div data-role="collapsible">');
-            fprintf(h3dfile,'\n        <h1>history</h1>');
             fprintf(h3dfile,'%s',map_history);
             fprintf(h3dfile,'\n    </div>');
             fprintf(h3dfile,'\n</div>');
             %history of the map
             
             %review form
+            load ver_string
             fprintf(h3dfile,'\n<script type="text/javascript">var submitted=false;</script>');
-            fprintf(h3dfile,'\n<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) {window.location=''map_v01_%03d.html'';}"></iframe>',map_count+1);
+            fprintf(h3dfile,'\n<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) {window.location=''map_%s_%03d.html'';}"></iframe>',ver_string,map_count+1);
             fprintf(h3dfile,'\n<form action="https://docs.google.com/forms/d/e/1FAIpQLSdszEMkab8jbzken1gc-qWysPUBPdll074uW4P6JAtktao4lA/formResponse" method="post" target="hidden_iframe" onsubmit="submitted=true;">');
             fprintf(h3dfile,'\n<input type="hidden" name="entry.2117498131" value="%d">',map_count);
+            fprintf(h3dfile,'\n<h4><a href="map_%s_%03d.html">Jump to Next</a></h4>',ver_string,map_count+1);
             
             
             h3dfoot = urlread('file:///C:/Users/user/Documents/GitHub/GoT/x3d/test/foottemplateaug16.html');

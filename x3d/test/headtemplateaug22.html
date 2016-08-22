@@ -1,0 +1,70 @@
+
+<html lang="en"> 
+<head>
+	<meta charset="ISO-8859-1">
+	
+    <title>My GoT page</title>
+    <script type='text/javascript' src='http://www.x3dom.org/download/1.7.1/x3dom.js'> </script>
+    <link rel='stylesheet' type='text/css' href='http://www.x3dom.org/download/1.7.1/x3dom.css'/>
+	
+	  
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+</head>
+<body>
+<style>
+x3d
+{
+    width: 100vw; 
+    height: 56.25vw; /* height:width ratio = 9/16 = .5625  */
+}
+
+caption {
+    display: table-caption;
+    text-align: center;
+}
+
+button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+input[type="submit"]{
+	background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+</style>
+
+
+
+<h1 align="center">Let's evaluate the map</h1>
+
+
+	<x3d> 
+    <scene>
+		<Viewpoint id="front" position="0 -1100 2000" orientation="1 0 0 0.5" description="camera"></Viewpoint>
+		<Transform translation='0 0 -1'>
+			<Transform scale='1 1 1'>
+				<shape>
+					<appearance>
+						<ImageTexture  url="./models/texture/GoT.jpg"></ImageTexture>
+					</appearance>
+					<box size='2972 1488 1'></box>
+				</shape>
+			</Transform>
+		</Transform>
+

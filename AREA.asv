@@ -98,6 +98,11 @@ classdef AREA < handle
            
            if areatype(obj.index)==0 % sea
                reachable(13:50)=0;
+               for i=51:58
+                  if  current_map_areas(current_map_areas(i).land_port_connection).house_flag~=obj.house_flag
+                      reachable(i)=0;
+                  end                   
+               end
            elseif areatype(obj.index)==1 % land
                reachable(1:12)=0;
                reachable(51:end)=0;
@@ -141,7 +146,9 @@ classdef AREA < handle
            end
            
            for i=1:50
-              if  retractable(i)>0 && current_map_areas(i).house_flag~=current_map_areas(index_of_this_land).house_flag
+              if  retractable(i)>0 && current_map_areas(i).house_flag~=current_map_areas(index_of_this_land).house_flag && current_map_areas(i).house_flag~=0
+                retractable(i)=0;
+              end
            end
        end
        
@@ -489,6 +496,15 @@ classdef AREA < handle
                     current_map_areas(one_march_order.element_array(1).target).remove_throne_token;
               end
               current_map_areas(one_march_order.element_array(1).target).set_house_flag(one_march_order.house_flag);
+              
+              if current_map_areas(one_march_order.element_array(1).target).land_type==1 && ...
+                      ~isempty(current_map_areas(one_march_order.element_array(1).target).land_port_connection) &&...
+                      ~isempty(current_map_areas(current_map_areas(one_march_order.element_array(1).target).land_port_connection).troops)
+                    
+                  for i=1:length(current_map_areas(current_map_areas(one_march_order.element_array(1).target).land_port_connection).troops)
+                        current_map_areas(current_map_areas(one_march_order.element_array(1).target).land_port_connection).troops(i).house_flag=obj.house_flag;
+              end
+              
               for j=1:length(one_march_order.element_array(1).troop_type_array)
                   current_map_areas(one_march_order.element_array(1).target).add_troop(one_march_order.element_array(1).troop_type_array(j));
                   if current_map_areas(one_march_order.element_array(1).target).defence>0 && is_capital(one_march_order.element_array(1).target)~=one_march_order.house_flag

@@ -272,19 +272,35 @@ classdef AREA < handle
                  end
                  march_orders=[march_orders,one_march_order];
             end
-        end
+       end
+       
+       function def_p=defence_power(obj)
+            def_p=obj.defence;
+            for i=1:length(obj.troops)
+                if obj.troops(i).type<=1 && obj.troops(i).active==1
+                    def_p=def_p+1;
+                elseif obj.troops(i).type==2 && obj.troops(i).active==1
+                    def_p=def_p+2;
+                end
+            end
+            if obj.order.defencing==1
+                def_p=def_p+1;
+            end            
+       end
        
        function set_house_flag(obj,flag)
            obj.house_flag=flag;
        end
        
-       function add_troop(obj,troop_type)
+       function add_troop(obj,troop_type,inactive)
 %            if length(obj.troops)>=4
 % %                fprintf('Already 4 Troops @ Area %d\n', obj.index);
 %                return;
 %            end
-               
-           obj.troops=[obj.troops,TROOP(troop_type,obj.house_flag)];
+           if inargn<3
+               inactive=0;
+           end
+           obj.troops=[obj.troops,TROOP(troop_type,obj.house_flag,inactive)];
        end
        
        function remove_troop(obj,troop_index)
@@ -336,7 +352,7 @@ classdef AREA < handle
        function remove_all_troops(obj)
            obj.troops=[];
        end
-       
+              
        function put_a_throne_token(obj, the_map)
            if the_map.use_a_throne_token(obj.house_flag)
                obj.throne_token=1;

@@ -132,6 +132,30 @@ classdef MAP < handle
             end
         end
         
+        function battle(obj,march_order,march_order_element_index)
+            march_order_element=march_order.element_array(march_order_element_index);
+            target_defence=obj.areas(march_order_element.target).defence_power;
+            march_power=march_order_element.attack;
+            if obj.rank2(obj.areas(march_order_element.target).house_flag)>obj.rank2(march_order_element.house_flag)
+                target_defence=target_defence+0.5;
+            else
+                march_power=march_power+0.5;
+            end
+            
+            if target_defence>march_power %march failed
+                ;
+            else %march succeed
+                possible_retreat_sites=obj.areas(march_order_element.target).can_retract_to(obj.map_areas);
+                retreat_site=possible_retreat_sites(randi(length(possible_retreat_sites)));
+                for i=1:length(obj.areas(march_order_element.target).troops)
+                    if obj.areas(march_order_element.target).troops(i).type~=3
+                        obj.areas(retreat_site).add_troop(obj.areas(march_order_element.target).troops(i).type);
+                    end
+                end
+                obj.areas(march_order_element.target).remove_all_troops;
+            end
+        end
+        
         function thrones=throne_token_on_the_map(obj,house_flag)
             thrones=[0,0,0,0,0,0];
             for i=1:58
@@ -208,13 +232,13 @@ classdef MAP < handle
                 fprintf(fid,'%s&#128038: ',newline); for i=1:6,    fprintf(fid,'%s ',house_index2name(obj.rank3(i)));  end
                 fprintf(fid,'%s',newline);  
 
-				fprintf(fid,'\n<h3><table cellspacing="15" cellpadding="2" width="100%" height="100px"><tbody>');
-				fprintf(fid,'\n<tr><td style="background-color: #CEF6CE;" width="33%">%s: %d Castles<br/>%s<br/>%d Barrels:',house_index2name(3),obj.castles_occupied(3),repmat('&#9819',1,obj.current_crowns(3)),obj.current_barrels(3));fprintf(fid,'%d',supply2(obj.current_barrels(3)));
-				fprintf(fid,'\n</td><td style="background-color: #F6CECE;" width="33%">%s: %d Castles<br/>%s<br/>%d Barrels:',house_index2name(4),obj.castles_occupied(4),repmat('&#9819',1,obj.current_crowns(4)),obj.current_barrels(4));fprintf(fid,'%d',supply2(obj.current_barrels(4)));
-				fprintf(fid,'\n</td><td style="background-color: #848484;" width="33%">%s: %d Castles<br/>%s<br/>%d Barrels:',house_index2name(5),obj.castles_occupied(5),repmat('&#9819',1,obj.current_crowns(5)),obj.current_barrels(5));fprintf(fid,'%d',supply2(obj.current_barrels(5)));
-				fprintf(fid,'\n</td></tr><tr><td style="background-color: #F6E3CE;" width="33%">%s: %d Castles<br/>%s<br/>%d Barrels:',house_index2name(1),obj.castles_occupied(1),repmat('&#9819',1,obj.current_crowns(1)),obj.current_barrels(1));fprintf(fid,'%d',supply2(obj.current_barrels(1)));
-				fprintf(fid,'\n</td><td style="background-color: #F5F6CE;" width="33%">%s: %d Castles<br/>%s<br/>%d Barrels:',house_index2name(2),obj.castles_occupied(2),repmat('&#9819',1,obj.current_crowns(2)),obj.current_barrels(2));fprintf(fid,'%d',supply2(obj.current_barrels(2)));
-				fprintf(fid,'\n</td><td style="background-color: #E6E6E6;" width="33%">%s: %d Castles<br/>%s<br/>%d Barrels:',house_index2name(6),obj.castles_occupied(6),repmat('&#9819',1,obj.current_crowns(6)),obj.current_barrels(6));fprintf(fid,'%d',supply2(obj.current_barrels(6)));
+				fprintf(fid,'\n<h3><table cellspacing="15" cellpadding="2" width="100%%" height="100px"><tbody>');
+				fprintf(fid,'\n<tr><td style="background-color: #CEF6CE;" width="33%%">%s: %d Castles<br/>%s<br/>%d Barrels:',house_index2name(3),obj.castles_occupied(3),repmat('&#9819',1,obj.current_crowns(3)),obj.current_barrels(3));fprintf(fid,'%d',supply2(obj.current_barrels(3)));
+				fprintf(fid,'\n</td><td style="background-color: #F6CECE;" width="33%%">%s: %d Castles<br/>%s<br/>%d Barrels:',house_index2name(4),obj.castles_occupied(4),repmat('&#9819',1,obj.current_crowns(4)),obj.current_barrels(4));fprintf(fid,'%d',supply2(obj.current_barrels(4)));
+				fprintf(fid,'\n</td><td style="background-color: #848484;" width="33%%">%s: %d Castles<br/>%s<br/>%d Barrels:',house_index2name(5),obj.castles_occupied(5),repmat('&#9819',1,obj.current_crowns(5)),obj.current_barrels(5));fprintf(fid,'%d',supply2(obj.current_barrels(5)));
+				fprintf(fid,'\n</td></tr><tr><td style="background-color: #F6E3CE;" width="33%%">%s: %d Castles<br/>%s<br/>%d Barrels:',house_index2name(1),obj.castles_occupied(1),repmat('&#9819',1,obj.current_crowns(1)),obj.current_barrels(1));fprintf(fid,'%d',supply2(obj.current_barrels(1)));
+				fprintf(fid,'\n</td><td style="background-color: #F5F6CE;" width="33%%">%s: %d Castles<br/>%s<br/>%d Barrels:',house_index2name(2),obj.castles_occupied(2),repmat('&#9819',1,obj.current_crowns(2)),obj.current_barrels(2));fprintf(fid,'%d',supply2(obj.current_barrels(2)));
+				fprintf(fid,'\n</td><td style="background-color: #E6E6E6;" width="33%%">%s: %d Castles<br/>%s<br/>%d Barrels:',house_index2name(6),obj.castles_occupied(6),repmat('&#9819',1,obj.current_crowns(6)),obj.current_barrels(6));fprintf(fid,'%d',supply2(obj.current_barrels(6)));
 				fprintf(fid,'\n</td></tr></tbody></table></h3>');
                 return;
             end
@@ -317,7 +341,7 @@ classdef MAP < handle
             end
             
             fprintf(h3dfile,'\n</scene></x3d>\n');
-            fprintf(h3dfile,'\n&nbsp;<br/><br/><br/><h3>Ranking<h3>Rank\n');
+            fprintf(h3dfile,'\n&nbsp;<br/><br/><h3>Ranking<h3>Rank\n');
             obj.list_map_as_text(h3dfile);
             fprintf(h3dfile,'\n</h3><br/>\n');
             

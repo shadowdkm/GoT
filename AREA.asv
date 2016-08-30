@@ -272,19 +272,39 @@ classdef AREA < handle
                  end
                  march_orders=[march_orders,one_march_order];
             end
-        end
+       end
+       
+       function def_p=defence_power(obj)
+            def_p=obj.defence;
+            for i=1:length(obj.troops)
+                if obj.troops(i).type<=1 && obj.troops(i).active==1
+                    def_p=def_p+1;
+                elseif obj.troops(i).type==2 && obj.troops(i).active==1
+                    def_p=def_p+2;
+                end
+            end
+            if obj.order.defencing==1
+                def_p=def_p+1;
+            end            
+       end
        
        function set_house_flag(obj,flag)
            obj.house_flag=flag;
        end
        
-       function add_troop(obj,troop_type)
+       function add_troop(obj,troop_type,inactive)
 %            if length(obj.troops)>=4
 % %                fprintf('Already 4 Troops @ Area %d\n', obj.index);
 %                return;
 %            end
-               
-           obj.troops=[obj.troops,TROOP(troop_type,obj.house_flag)];
+           if nargin<3
+               obj.troops=[obj.troops,TROOP(troop_type,obj.house_flag,inactive)];      
+           else
+               the_troop=TROOP(troop_type,obj.house_flag);
+               the_troop.Disable;
+               obj.troops=[obj.troops,the_troop];
+           end
+           
        end
        
        function remove_troop(obj,troop_index)
@@ -336,7 +356,7 @@ classdef AREA < handle
        function remove_all_troops(obj)
            obj.troops=[];
        end
-       
+              
        function put_a_throne_token(obj, the_map)
            if the_map.use_a_throne_token(obj.house_flag)
                obj.throne_token=1;
@@ -498,11 +518,12 @@ classdef AREA < handle
               current_map_areas(one_march_order.element_array(1).target).set_house_flag(one_march_order.house_flag);
               
               if current_map_areas(one_march_order.element_array(1).target).land_type==1 && ...
-                      ~isempty(current_map_areas(one_march_order.element_array(1).target).land_port_connection) &&...
+                      current_map_areas(one_march_order.element_array(1).target).land_port_connection>0 &&...
                       ~isempty(current_map_areas(current_map_areas(one_march_order.element_array(1).target).land_port_connection).troops)
-                    
+                  current_map_areas(current_map_areas(one_march_order.element_array(1).target).land_port_connection).house_flag=obj.house_flag;
                   for i=1:length(current_map_areas(current_map_areas(one_march_order.element_array(1).target).land_port_connection).troops)
                         current_map_areas(current_map_areas(one_march_order.element_array(1).target).land_port_connection).troops(i).house_flag=obj.house_flag;
+                  end
               end
               
               for j=1:length(one_march_order.element_array(1).troop_type_array)

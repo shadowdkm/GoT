@@ -1,5 +1,5 @@
 %mass_produce maps
-ver_string='v012';
+ver_string='v0121';
 save ver_string ver_string
 for map_indexs=1:50
     testing_script

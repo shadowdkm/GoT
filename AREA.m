@@ -292,15 +292,8 @@ classdef AREA < handle
            obj.house_flag=flag;
        end
        
-       function add_troop(obj,troop_type,inactive)
-%            if length(obj.troops)>=4
-% %                fprintf('Already 4 Troops @ Area %d\n', obj.index);
-%                return;
-%            end
-           if inargn<3
-               inactive=0;
-           end
-           obj.troops=[obj.troops,TROOP(troop_type,obj.house_flag,inactive)];
+       function add_troop(obj,troop_type)
+           obj.troops=[obj.troops,TROOP(troop_type,obj.house_flag)];
        end
        
        function remove_troop(obj,troop_index)

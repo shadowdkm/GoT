@@ -17,8 +17,9 @@
 <style>
 x3d
 {
-    width: 95vw; 
-    height: 52vw; /* height:width ratio = 9/16 = .5625  */
+    width: 90vw; 
+    height: 45vw; /* height:width ratio = 9/16 = .5625  */
+	align: center; 
 }
 
 caption {
@@ -61,10 +62,13 @@ input[type="submit"]{
 			<Transform scale='1 1 1'>
 				<shape>
 					<appearance>
-						<ImageTexture  url="./models/texture/GoT.jpg"></ImageTexture>
+						 <MovieTexture repeatS="false" repeatT="false" loop='true' url='t.ogv'></MovieTexture>
 					</appearance>
 					<box size='2972 1488 1'></box>
 				</shape>
 			</Transform>
 		</Transform>
-
+ </scene>
+ </x3d> 
+</body>
+</html>

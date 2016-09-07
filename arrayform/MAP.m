@@ -1,0 +1,164 @@
+classdef MAP %< handle
+    properties (GetAccess=public, SetAccess=public)
+        data=zeros(58,58,18);
+%  1	number	local_troop1
+%  2	number	local_troop2
+%  3	number	local_troop3
+%  4	number	local_troop4
+%  5	bool	local_throne_token
+%  6	number	local_defence
+%  7	number	local_house_flag
+%  8	number	house_rank1
+%  9	number	house_rank2
+% 10	number	house_rank3
+% 11	number	house_power_tokens
+% 12	number	house_supply
+% 13	number	const_crowns
+% 14	number	const_barrels
+% 15	number	const_towers
+% 16	bool vect	const_connected_to
+% 17	number	const_land_port_connection
+% 18	number	const_home
+    end
+    properties (Dependent, Hidden)
+        rank1
+        rank2
+        rank3
+    end
+    properties (Constant, Hidden)  
+        capitals=[13,23,27,37,41,47];
+        init_seas=[8,10,5,3,2,12];
+        i_local_troop1=1;
+        i_local_troop2=2;
+        i_local_troop3=3;
+        i_local_troop4=4;
+        i_local_troops=1:4;
+        i_local_throne_token=5;
+        i_local_defence=6;
+        i_local_house_flag=7;
+        i_house_rank1=8;
+        i_house_rank2=9;
+        i_house_rank3=10;
+        i_house_power_tokens=11;
+        i_house_supply=12;
+        i_const_crowns=13;
+        i_const_barrels=14;
+        i_const_towers=15;
+        i_const_connected_to=16;
+        i_const_land_port_connection=17;
+        i_const_home=18;
+        area_names={'The Narrow Sea','Bay of Ice','Ironman`s Bay','The Golden Sound','Sunset Sea','West Summer Sea','Sea of Dorne','East Summer Sea','Blackwater Bay','Shipbreaker Bay','Shivering Sea','Sunspear','Salt Shore','Yronwood','Redwyne Straights','Starfall','Prince`s Pass','Three Towers','The Arbor','The Boneway','Dornish Marches','The Reach','Old Town','Dragonstone','Storms End','Kingswood','Highgarden','King`s Landing','Blackwater','Crackclaw Point','Harrenhal','Stoney Sept','Searoad Marches','The Eyrie','The Mountains of the Moon','Riverrun','Lannisport','The Fingers','The Twins','Seagard','Pyke','Moat Cailin','Greywater Watch','Flint`s Finger','Widow`s Watch','White Harbor','Winterfell','The Stony Shore','Karhold','Castle Black','Port of Iron','Port of Lannisport','Port of Old Town','Port of Sunspear','Port of Storms End','Port of Dragon Stone','Port of White Habour','Port of Winterfell'};
+    end
+    
+    
+    methods
+        function obj = MAP(data)
+            if ~isempty(data)
+                obj.data=data;
+                return;
+            end
+            load map_res
+            load AreaConns
+            obj.data(:,:,1:4)=0;
+            obj.data(:,:,6)=diag(map_resourses(:,5));%defence
+            obj.data(:,:,13)=diag(map_resourses(:,3));%const crowns
+            obj.data(:,:,14)=diag(map_resourses(:,2));%const barrels
+            obj.data(:,:,15)=diag(map_resourses(:,4));%const towers
+            obj.data(:,:,16)=areaconns;%const connections
+            for i=1:16 % 
+                obj.data(portconns(i,1),portconns(i,1),17)=portconns(i,2);%const land port connection
+            end
+            for i=1:6  % home land
+                obj.data(obj.capitals(i),obj.capitals(i),obj.i_const_home)=i;     % const home
+                obj.data(obj.capitals(i),obj.capitals(i),obj.i_local_troop1)=1;      % a ft
+                obj.data(obj.capitals(i),obj.capitals(i),obj.i_local_troop2)=2;      % a kt
+                obj.data(obj.capitals(i),obj.capitals(i),obj.i_local_house_flag)=i;      % set flag        
+                obj.data(obj.init_seas(i),obj.init_seas(i),obj.i_local_troop1)=4;    % a shp
+                obj.data(obj.init_seas(i),obj.init_seas(i),obj.i_local_house_flag)=i;    % set flag
+            end
+            
+            obj.data(14,14,obj.i_local_troop4)=1;  obj.data(14,14,obj.i_local_house_flag)=1; 
+            obj.data(25,25,obj.i_local_troop4)=1;  obj.data(25,25,obj.i_local_house_flag)=2; 
+            obj.data(21,21,obj.i_local_troop4)=1;  obj.data(21,21,obj.i_local_house_flag)=3; 
+            obj.data(32,32,obj.i_local_troop4)=1;  obj.data(32,32,obj.i_local_house_flag)=4; 
+            obj.data(43,43,obj.i_local_troop4)=1;  obj.data(43,43,obj.i_local_house_flag)=5; 
+            obj.data(46,46,obj.i_local_troop4)=1;  obj.data(46,46,obj.i_local_house_flag)=6; 
+            obj.data(51,51,obj.i_local_troop4)=4;  obj.data(51,51,obj.i_local_house_flag)=5;
+            obj.data(10,10,obj.i_local_troop4)=4;  
+            
+            
+        end
+        
+        function obj = set.rank1(obj,val)
+            if length(val)==6
+                for k=1:6
+                obj.data(obj.capitals(k),obj.capitals(k),obj.i_house_rank1) = val(k);
+                end
+            else
+                error('rank have to be 6')
+            end
+        end
+        function value = get.rank1(obj)
+            value =  diag(obj.data(obj.capitals,obj.capitals,obj.i_house_rank1));
+        end
+        function obj = set.rank2(obj,val)
+            if length(val)==6
+                for k=1:6
+                obj.data(obj.capitals(k),obj.capitals(k),obj.i_house_rank2) = val(k);
+                end
+            else
+                error('rank have to be 6')
+            end
+        end
+        function value = get.rank2(obj)
+            value =  diag(obj.data(obj.capitals,obj.capitals,obj.i_house_rank2));
+        end
+        function obj = set.rank3(obj,val)
+            if length(val)==6
+                for k=1:6
+                obj.data(obj.capitals(k),obj.capitals(k),obj.i_house_rank3) = val(k);
+                end
+            else
+                error('rank have to be 6')
+            end
+        end
+        function value = get.rank3(obj)
+            value =  diag(obj.data(obj.capitals,obj.capitals,obj.i_house_rank3));
+        end
+        function obj=set.data(obj,val)
+            obj.data=val;
+        end
+        
+        
+        function v3d(obj)
+            figure(5076),clf, hold on
+            for i=1:58
+                for j=1:58
+                    for k=1:18
+                        if obj.data(i,j,k)>0
+                            cell_label=sprintf('%d',obj.data(i,j,k));
+                            text(i,j,k,cell_label,'BackgroundColor',house2color(obj.data(i,i,obj.i_local_house_flag)));
+                        end
+                    end
+                end
+            end
+            axis('image');
+            xlim([0,59]),ylim([0,59]),zlim([0,19]),
+            set(gca,'ZTick',1:18)
+            set(gca,'ZTickLabel',{'local_troop1',	'local_troop2',	'local_troop3',	'local_troop4',	'local_throne_token',	'local_defence',	'local_house_flag',	'house_rank1',	'house_rank2',	'house_rank3',	'house_power_tokens',	'house_supply',	'const_crowns',	'const_barrels',	'const_towers',	'const_connected_to',	'const_land_port_connection',	'const_home'})
+            set(gca,'yTick',1:58)
+            set(gca,'yTickLabel',obj.area_names)
+            
+            
+            grid minor
+        end
+        
+        function obj=refresh(obj)
+            for i=1:58
+               obj.data(i,i,obj.i_local_troops)=sort(obj.data(i,i,obj.i_local_troops),'descend'); 
+            end
+        end
+        
+    end
+    
+end

@@ -281,6 +281,40 @@ classdef MAP < handle
             fprintf(fid,'%s',newline);
         end
         
+        function v=eval(obj, house_flag)
+%             v_towers=0;
+%             v_barrals=0;
+%             v_crowns=0;            
+%             v_army=0;
+%             v_rank=0;
+            v_areas=0;                
+            
+            w_towers=20;
+            w_barrals=10;
+            w_crowns=10;            
+            w_army=40;
+            w_areas=0;            
+            w_rank=50;
+            w=[w_towers,w_barrals,w_crowns,w_army,w_areas,w_rank];
+            w=w/sum(w);
+            
+            v_towers=sqrt(obj.castles_occupied(house_flag)/7)*100;
+            v_barrals=sqrt(obj.current_barrels(house_flag)/7)*100;
+            v_crowns=sqrt(obj.current_crowns(house_flag)/20)*100;            
+            v_rank=33/obj.rank1(house_flag)+33/obj.rank2(house_flag)+33/obj.rank3(house_flag);
+            
+            v_army=0;
+         
+            area_list2disp=obj.areas_of_a_house(house_flag);
+            for j=1:length(area_list2disp)
+                for k=1:length(obj.map_areas(area_list2disp(j)).troops)
+                    v_army=v_army+obj.map_areas(area_list2disp(j)).troops(k).type;
+                end    
+            end 
+            v=[v_towers,v_barrals,v_crowns,v_army,v_areas,v_rank];
+            v=v*w';
+        end
+        
         function list_map_as_html(obj,map_count,map_history)
             %             fprintf('\n*****************************')
             if nargin<3
@@ -341,7 +375,7 @@ classdef MAP < handle
             end
             
             fprintf(h3dfile,'\n</scene></x3d>\n');
-            fprintf(h3dfile,'\n&nbsp;<br/><br/><h3>Ranking<h3>Rank\n');
+            fprintf(h3dfile,'\n&nbsp;<br/><br/><h3>Ranking</h3>Rank\n');
             obj.list_map_as_text(h3dfile);
             fprintf(h3dfile,'\n</h3><br/>\n');
             

@@ -9,4 +9,4 @@ while(~sum(m.castles_occupied>6)&&round<=6)
     fprintf('\n-- R %d --\n',round);            logs=strcat(logs,sprintf('\n-- R %d --\n',round));
     round=round+1;
 end
-m.list_map_as_html(map_indexs, logs);
+% m.list_map_as_html(map_indexs, logs);
